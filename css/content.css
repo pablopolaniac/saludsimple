@@ -1,0 +1,822 @@
+﻿/* ==========================================
+   SaludSimple.org — Content Page Styles
+   ========================================== */
+
+.content-page {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: 48px 32px 80px;
+}
+
+.content-page__section {
+  margin-bottom: 48px;
+}
+
+.content-page__section-title {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--bosque);
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 3px solid rgba(46, 139, 122, 0.28);
+}
+
+.content-page h3 {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--bosque);
+  margin: 24px 0 12px;
+}
+
+.content-page h4 {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--bosque);
+  margin: 20px 0 8px;
+}
+
+.content-page p {
+  font-size: 1.0625rem;
+  line-height: 1.8;
+  color: var(--texto);
+  margin-bottom: 1rem;
+}
+
+.content-page ul,
+.content-page ol {
+  padding-left: 3rem;
+  margin-bottom: 1.2rem;
+  list-style-position: outside;
+}
+
+.content-page ul {
+  list-style: disc;
+}
+
+.content-page ol {
+  list-style: decimal;
+}
+
+/* ❌ markers replace disc bullets (must beat .content-page ul) */
+.content-page ul.content-page__x-list {
+  list-style: none;
+  padding-left: 3rem;
+}
+
+.content-page ul.content-page__x-list li {
+  position: relative;
+  padding-left: 0;
+}
+
+.content-page ul.content-page__x-list li::before {
+  content: "❌";
+  position: absolute;
+  left: -1.65em;
+  width: 1.25em;
+  text-align: center;
+}
+
+/* ✅ markers for covered / included lists */
+.content-page ul.content-page__check-list {
+  list-style: none;
+  padding-left: 3rem;
+}
+
+.content-page ul.content-page__check-list li {
+  position: relative;
+  padding-left: 0;
+}
+
+.content-page ul.content-page__check-list li::before {
+  content: "✔";
+  position: absolute;
+  left: -1.65em;
+  width: 1.25em;
+  text-align: center;
+  color: #22C55E;
+  font-size: 1.05em;
+  font-weight: 700;
+  line-height: 1.7;
+}
+
+.content-page li {
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--texto);
+  margin-bottom: 8px;
+}
+
+.content-page__term-list {
+  background-color: var(--fondo-claro);
+  border-radius: var(--card-radius);
+  padding: 24px 28px;
+  margin-bottom: 1.5rem;
+}
+
+.content-page__term-list dt {
+  font-weight: 700;
+  color: var(--bosque);
+  margin-bottom: 4px;
+}
+
+.content-page__term-list dd {
+  margin-bottom: 12px;
+  padding-left: 16px;
+  color: var(--texto);
+}
+
+.content-page__term-list dd:last-child {
+  margin-bottom: 0;
+}
+
+.content-page__quote {
+  background-color: var(--fondo-claro);
+  border-left: 4px solid var(--salud);
+  padding: 16px 24px;
+  border-radius: 0 var(--card-radius) var(--card-radius) 0;
+  margin-bottom: 1.5rem;
+  font-style: italic;
+  color: var(--texto);
+}
+
+.content-page__important {
+  background-color: #FFF3E0;
+  border-left: 4px solid var(--comunidad);
+  padding: 20px 24px;
+  border-radius: 0 var(--card-radius) var(--card-radius) 0;
+  margin-bottom: 1.5rem;
+}
+
+.content-page__important-title {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--comunidad);
+  margin-bottom: 8px;
+}
+
+.content-page__error-list {
+  margin-bottom: 1.5rem;
+}
+
+.content-page__error-item {
+  background-color: #fff;
+  border: 1px solid rgba(46, 139, 122, 0.12);
+  border-radius: var(--card-radius);
+  padding: 16px 20px;
+  margin-bottom: 12px;
+}
+
+.content-page__error-item:last-child {
+  margin-bottom: 0;
+}
+
+.content-page__subpage-link {
+  color: var(--comunidad);
+  font-weight: 700;
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.content-page__subpage-link:hover {
+  color: #c96a2e;
+}
+
+/* Title + body + CTA cards: keep link close to the text above */
+.content-page p:has(+ a[style*="display: inline-block"]),
+.content-page p:has(+ a.link-cta),
+.content-page ul:has(+ a[style*="display: inline-block"]),
+.content-page ul:has(+ a.link-cta) {
+  margin-bottom: 0.35rem;
+}
+
+/* Standalone "go to page" CTAs — match bullet list indent (not in-card links) */
+.content-page a[style*="display: inline-block"]:not([href^="tel:"]):not([href^="sms:"]),
+.content-page p[style*="margin-top"] > a[style*="font-weight: 700"]:not([href^="tel:"]):not([href^="sms:"]),
+.content-page p[style*="margin-top"] > a[style*="font-weight:700"]:not([href^="tel:"]):not([href^="sms:"]),
+.content-page p[style*="margin-top"] > a.content-page__subpage-link,
+.content-page p > a.content-page__subpage-link:only-child {
+  margin-left: 3rem;
+  margin-top: 0.15rem !important; /* override inline 12px/16px so CTAs sit near body text */
+  transition: color 0.2s ease;
+}
+
+.content-page a.link-cta {
+  transition: color 0.2s ease;
+}
+
+.content-page a[style*="display: inline-block"]:not([href^="tel:"]):not([href^="sms:"])::after,
+.content-page p[style*="margin-top"] > a[style*="font-weight: 700"]:not([href^="tel:"]):not([href^="sms:"])::after,
+.content-page p[style*="margin-top"] > a[style*="font-weight:700"]:not([href^="tel:"]):not([href^="sms:"])::after,
+.content-page p[style*="margin-top"] > a.content-page__subpage-link::after,
+.content-page p > a.content-page__subpage-link:only-child::after,
+.content-page a.link-cta::after {
+  content: '';
+  display: inline-block;
+  width: 0.4em;
+  height: 0.4em;
+  margin-left: 0.45em;
+  border-right: 2.5px solid currentColor;
+  border-top: 2.5px solid currentColor;
+  transform: rotate(45deg);
+  vertical-align: 0.12em;
+  transition: transform 0.2s ease, margin-left 0.2s ease;
+}
+
+.content-page a[style*="display: inline-block"]:not([href^="tel:"]):not([href^="sms:"]):hover,
+.content-page p[style*="margin-top"] > a[style*="font-weight: 700"]:not([href^="tel:"]):not([href^="sms:"]):hover,
+.content-page p[style*="margin-top"] > a[style*="font-weight:700"]:not([href^="tel:"]):not([href^="sms:"]):hover,
+.content-page p[style*="margin-top"] > a.content-page__subpage-link:hover,
+.content-page p > a.content-page__subpage-link:only-child:hover,
+.content-page a.link-cta:hover {
+  color: #c96a2e;
+}
+
+.content-page a[style*="display: inline-block"]:not([href^="tel:"]):not([href^="sms:"]):hover::after,
+.content-page p[style*="margin-top"] > a[style*="font-weight: 700"]:not([href^="tel:"]):not([href^="sms:"]):hover::after,
+.content-page p[style*="margin-top"] > a[style*="font-weight:700"]:not([href^="tel:"]):not([href^="sms:"]):hover::after,
+.content-page p[style*="margin-top"] > a.content-page__subpage-link:hover::after,
+.content-page p > a.content-page__subpage-link:only-child:hover::after,
+.content-page a.link-cta:hover::after {
+  margin-left: 0.7em;
+  transform: rotate(45deg) translate(1px, -1px);
+}
+
+/* Shared thicker arrow mark (cards / list rows) */
+.cta-arrow {
+  display: inline-block;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-right: 2.75px solid currentColor;
+  border-top: 2.75px solid currentColor;
+  transform: rotate(45deg);
+  flex-shrink: 0;
+  color: inherit;
+}
+
+.content-page__resources-link {
+  display: inline-block;
+  margin-top: 8px;
+  color: var(--bosque);
+  font-weight: 600;
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+/* Inline info button that expands an explanation underneath */
+.info-reveal {
+  display: block;
+}
+
+.info-reveal__row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.info-reveal__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.2rem;
+  height: 1.2rem;
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0;
+  border: 1.75px solid var(--salud);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--salud);
+  font-family: var(--font-primary);
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-style: italic;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.info-reveal__btn:hover,
+.info-reveal__btn[aria-expanded="true"] {
+  background-color: var(--salud);
+  color: #fff;
+  border-color: var(--salud);
+}
+
+.info-reveal__btn:focus-visible {
+  outline: 2px solid var(--salud);
+  outline-offset: 2px;
+}
+
+.info-reveal__panel {
+  margin-top: 0.65rem;
+  padding: 12px 16px;
+  background: rgba(58, 175, 160, 0.08);
+  border-left: 3px solid var(--salud);
+  border-radius: 0 8px 8px 0;
+}
+
+.info-reveal__panel[hidden] {
+  display: none;
+}
+
+.info-reveal__panel p {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.55;
+}
+
+/* Inline term with hover tip (e.g. open enrollment dates) */
+.term-tip {
+  position: relative;
+  display: inline;
+  color: var(--salud);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: var(--salud);
+  text-underline-offset: 3px;
+  cursor: help;
+}
+
+.term-tip:focus {
+  outline: 2px solid var(--salud);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.term-tip__bubble {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 10px);
+  transform: translateX(-50%) translateY(4px);
+  min-width: max-content;
+  max-width: min(240px, 70vw);
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: var(--texto);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.35;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: 0 6px 18px rgba(58, 46, 38, 0.22);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s ease;
+  z-index: 20;
+}
+
+.term-tip__bubble::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--texto);
+}
+
+.term-tip:hover .term-tip__bubble,
+.term-tip:focus .term-tip__bubble,
+.term-tip:focus-within .term-tip__bubble {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.content-page__resources-link:hover {
+  color: var(--comunidad);
+}
+
+/* --- Resource finder (state dropdown + results) --- */
+.resource-finder {
+  margin-top: 8px;
+}
+
+.resource-finder__label {
+  display: block;
+  font-weight: 700;
+  color: var(--bosque);
+  margin-bottom: 8px;
+}
+
+.resource-finder__select {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  padding: 12px 16px;
+  font-family: var(--font-primary);
+  font-size: 1rem;
+  border: 2px solid var(--bosque);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--texto);
+  cursor: pointer;
+}
+
+.resource-finder__results {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  margin-top: 0;
+  transition:
+    grid-template-rows 0.45s ease,
+    opacity 0.35s ease,
+    margin-top 0.35s ease;
+}
+
+.resource-finder__results.is-open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  margin-top: 20px;
+}
+
+.resource-finder__results-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.resource-finder__panel {
+  background: #fff;
+  border: 1px solid rgba(46, 139, 122, 0.14);
+  border-radius: 14px;
+  padding: 8px 24px 20px;
+}
+
+.resource-finder__panel-heading {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--bosque);
+  margin: 16px 0 4px;
+}
+
+.resource-finder__item {
+  padding: 18px 0;
+}
+
+.resource-finder__item--compact {
+  padding: 14px 0;
+}
+
+.resource-finder__item + .resource-finder__item {
+  border-top: 1px solid rgba(46, 139, 122, 0.18);
+}
+
+.resource-finder__link--primary {
+  display: inline-block;
+  font-size: 1.05rem;
+  margin-bottom: 4px;
+}
+
+.resource-finder__item--compact .resource-finder__meta {
+  margin: 0;
+}
+
+.resource-finder__item-hint {
+  margin: 2px 0 4px;
+  font-size: 0.95rem;
+  color: var(--texto);
+  line-height: 1.4;
+}
+
+.resource-finder__item-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--comunidad);
+  margin: 0 0 6px;
+  letter-spacing: 0.02em;
+}
+
+.resource-finder__item-title {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 1.12rem;
+  color: var(--bosque);
+  margin: 0 0 8px;
+}
+
+.resource-finder__item-desc {
+  margin: 0 0 8px;
+  color: var(--texto);
+  line-height: 1.5;
+}
+
+.resource-finder__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+  margin: 0 0 10px;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.resource-finder__meta-item {
+  display: inline;
+}
+
+.resource-finder__meta-url {
+  font-weight: 600;
+  color: var(--bosque);
+}
+
+.resource-finder__meta-sep {
+  opacity: 0.45;
+}
+
+.resource-finder__phones {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 6px 0 8px;
+}
+
+.resource-finder__phone {
+  margin: 0;
+}
+
+.resource-finder__phone-label {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.resource-finder__phone a {
+  color: var(--bosque);
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.resource-finder__link {
+  display: inline-block;
+  margin-top: 2px;
+  color: var(--comunidad);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.resource-finder__link:hover {
+  color: #c96a2e;
+}
+
+.resource-finder__note,
+.resource-finder__empty {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.resource-finder__pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(46, 139, 122, 0.14);
+}
+
+.resource-finder__pagination-label {
+  font-family: var(--font-primary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.resource-finder__pagination-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.resource-finder__page-btn {
+  min-width: 2.25rem;
+  height: 2.25rem;
+  padding: 0 0.55rem;
+  border: 1px solid rgba(46, 139, 122, 0.28);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--bosque);
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.resource-finder__page-btn:hover {
+  border-color: var(--bosque);
+  background: rgba(46, 139, 122, 0.08);
+}
+
+.resource-finder__page-btn.is-active {
+  background: var(--bosque);
+  border-color: var(--bosque);
+  color: #fff;
+  cursor: default;
+}
+
+@media (max-width: 768px) {
+  .content-page {
+    padding: 32px 20px 60px;
+  }
+
+  .content-page__section {
+    margin-bottom: 36px;
+  }
+
+  .content-page__section-title {
+    font-size: 1.2rem;
+  }
+}
+
+/* ==========================================
+   SaludSimple.org — Collapsible content section
+   Same look as section titles; chevron only difference
+   ========================================== */
+
+.content-page__collapse-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+}
+
+.content-page__collapse-trigger > span:first-child {
+  flex: 1;
+  min-width: 0;
+}
+
+.content-page__collapse-chevron {
+  display: inline-block;
+  width: 0.55rem;
+  height: 0.55rem;
+  margin-bottom: 0.15em;
+  flex-shrink: 0;
+  border-right: 2.5px solid currentColor;
+  border-bottom: 2.5px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.content-page__collapse-trigger:hover {
+  color: var(--comunidad);
+}
+
+.content-page__collapse-trigger:hover .content-page__collapse-chevron {
+  border-color: var(--comunidad);
+  transform: rotate(45deg) translate(2px, 2px);
+}
+
+.content-page__collapse.is-open .content-page__collapse-chevron {
+  transform: rotate(225deg);
+  margin-bottom: 0;
+}
+
+.content-page__collapse.is-open .content-page__collapse-trigger:hover .content-page__collapse-chevron {
+  transform: rotate(225deg) translate(-2px, -2px);
+}
+
+.content-page__collapse-panel {
+  padding: 0;
+}
+
+.content-page__collapse-panel[hidden] {
+  display: none;
+}
+
+.content-page__need-options {
+  padding-left: 20px;
+  margin-top: 4px;
+}
+
+.content-page__need-card {
+  background: #fff;
+  border: 1px solid rgba(46, 139, 122, 0.12);
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.content-page__need-card-title {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--bosque);
+  margin: 0;
+  padding: 20px 24px;
+}
+
+.content-page h3.content-page__need-card-title {
+  font-size: 1.5rem;
+  margin: 0;
+  color: var(--bosque);
+}
+
+.content-page__need-card .content-page__collapse-panel {
+  padding: 0 24px 24px;
+}
+
+@media (max-width: 768px) {
+  .content-page__need-options {
+    padding-left: 12px;
+  }
+
+  .content-page__need-card-title,
+  .content-page h3.content-page__need-card-title {
+    font-size: 1.2rem;
+    padding: 18px 20px;
+  }
+
+  .content-page__need-card .content-page__collapse-panel {
+    padding: 0 20px 20px;
+  }
+}
+
+/* ==========================================
+   SaludSimple.org — FAQ accordion
+   ========================================== */
+
+.faq-item {
+  background: #fff;
+  border: 1px solid rgba(46, 139, 122, 0.12);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.faq-item__question {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  margin: 0;
+  padding: 18px 24px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 1.125rem;
+  line-height: 1.4;
+  color: var(--bosque);
+}
+
+.faq-item__question:hover {
+  color: var(--comunidad);
+}
+
+.faq-item__question-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.faq-item__chevron {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-top: 0.45em;
+  flex-shrink: 0;
+  border-right: 2.5px solid currentColor;
+  border-bottom: 2.5px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+}
+
+.faq-item.is-open .faq-item__chevron {
+  margin-top: 0.55em;
+  transform: rotate(225deg);
+}
+
+.faq-item__answer {
+  padding: 0 24px 18px;
+}
+
+.faq-item__answer[hidden] {
+  display: none;
+}
+
+.faq-item__answer p {
+  margin-bottom: 0.75rem;
+}
+
+.faq-item__answer p:last-child {
+  margin-bottom: 0;
+}

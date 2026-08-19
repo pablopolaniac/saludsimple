@@ -1,0 +1,277 @@
+/* ==========================================
+   SaludSimple.org — Hero Section Styles
+   ========================================== */
+
+/* --- Homepage Hero (horizontal split layout) --- */
+.hero {
+  position: relative;
+  width: 100%;
+  min-height: 520px;
+  display: flex;
+  overflow: hidden;
+  background-color: var(--bosque);
+}
+
+.hero__text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 72px 40px 72px max(16px, calc((100vw - var(--max-width)) / 2 + 8px));
+  max-width: 58%;
+  position: relative;
+  z-index: 2;
+}
+
+.hero__text-inner {
+  max-width: 720px;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.hero__title {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  /* Keep absolute size so the landing headline doesn't grow with the root bump */
+  font-size: 48px;
+  color: #fff;
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+
+.hero__title-lead {
+  white-space: pre-line;
+}
+
+.hero__title-accent {
+  display: block;
+  color: var(--apoyo);
+  white-space: nowrap;
+}
+
+.hero__subtitle {
+  font-family: var(--font-primary);
+  font-weight: 400;
+  font-size: 1.15rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 36px;
+  line-height: 1.7;
+}
+
+.hero__cta {
+  display: inline-block;
+  align-self: flex-start;
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: var(--comunidad);
+  color: #fff;
+  padding: 14px 36px;
+  border-radius: var(--btn-radius);
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.hero__cta:hover {
+  background-color: #c96a2e;
+  transform: translateY(-2px);
+}
+
+.hero__image {
+  flex: 1;
+  position: relative;
+  max-width: 45%;
+  overflow: hidden;
+}
+
+.hero__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hero__image-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--salud) 0%, var(--bosque) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- Section Hero (for section index pages) --- */
+.section-hero {
+  position: relative;
+  width: 100%;
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background-color: var(--bosque);
+}
+
+.section-hero--with-image {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.section-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(46, 139, 122, 0.88);
+  z-index: 1;
+}
+
+.section-hero:not(.section-hero--with-image) .section-hero__overlay {
+  background-color: var(--bosque);
+}
+
+.section-hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section-hero__title {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 2.4rem;
+  color: #fff;
+  margin-bottom: 12px;
+}
+
+.section-hero__subtitle {
+  font-family: var(--font-primary);
+  font-weight: 400;
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 600px;
+  line-height: 1.6;
+}
+
+/* --- Subpage Header (for subpages without hero images) --- */
+.page-header {
+  background-color: var(--bosque);
+  padding: 48px 0;
+}
+
+.page-header__title {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 2rem;
+  color: #fff;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* --- Crisis Banner (mental health) --- */
+.crisis-banner {
+  background-color: #c0392b;
+  padding: 20px 24px;
+  text-align: center;
+}
+
+.crisis-banner__inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.crisis-banner__number {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 2.4rem;
+  color: #fff;
+  letter-spacing: 0.05em;
+}
+
+.crisis-banner__text {
+  font-family: var(--font-primary);
+  font-weight: 600;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.crisis-banner__link {
+  display: inline-block;
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: #fff;
+  color: #c0392b;
+  padding: 10px 24px;
+  border-radius: var(--btn-radius);
+  cursor: default;
+  text-decoration: none;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .hero__text {
+    max-width: 100%;
+    padding: 48px 24px;
+  }
+
+  .hero__text-inner {
+    max-width: 100%;
+    margin-left: 0;
+    padding-left: 0;
+  }
+
+  .hero__title {
+    font-size: 2.2rem;
+  }
+
+  .hero__title-accent {
+    white-space: normal;
+  }
+
+  .hero__subtitle {
+    font-size: 1.05rem;
+  }
+
+  .hero__image {
+    max-width: 100%;
+    min-height: 260px;
+  }
+
+  .section-hero {
+    min-height: 240px;
+  }
+
+  .section-hero__title {
+    font-size: 1.8rem;
+  }
+
+  .page-header__title {
+    font-size: 1.6rem;
+  }
+
+  .crisis-banner__number {
+    font-size: 2rem;
+  }
+
+  .crisis-banner__inner {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

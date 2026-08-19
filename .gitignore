@@ -1,0 +1,33 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*~
+.idea/
+.vscode/
+*.code-workspace
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+credentials.json
+*.pem
+
+# Logs / temp
+*.log
+_tmp_*.py
+.cache/
+tmp/
+temp/
+~$*
+
+# Node (if added later)
+node_modules/
+dist/
+build/
+
+# Local tooling
+.cursor/
+agent-transcripts/

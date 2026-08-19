@@ -1,0 +1,455 @@
+/* ==========================================
+   SaludSimple.org — Components Stylesheet
+   ========================================== */
+
+/* --- Buttons --- */
+.btn {
+  display: inline-block;
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 12px 28px;
+  border-radius: var(--btn-radius);
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  text-align: center;
+}
+
+.btn--primary {
+  background-color: var(--comunidad);
+  color: #fff;
+}
+
+.btn--primary:hover {
+  background-color: #c96a2e;
+  transform: translateY(-2px);
+}
+
+.btn--secondary {
+  background-color: var(--bosque);
+  color: #fff;
+}
+
+.btn--secondary:hover {
+  background-color: #257066;
+  transform: translateY(-2px);
+}
+
+.btn--outline {
+  background-color: transparent;
+  color: var(--bosque);
+  border: 2px solid var(--bosque);
+}
+
+.btn--outline:hover {
+  background-color: var(--bosque);
+  color: #fff;
+}
+
+/* --- Section Cards (Homepage) --- */
+.section-cards {
+  padding: var(--section-padding-desktop) 0;
+}
+
+.section-cards__heading {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.section-cards__grid {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.section-card {
+  background: #fff;
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  padding: 32px 28px;
+  border-top: 3px solid var(--bosque);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.section-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 28px rgba(46, 139, 122, 0.14);
+  border-top-color: var(--comunidad);
+}
+
+.section-card--accent-1 { border-top-color: var(--bosque); }
+.section-card--accent-2 { border-top-color: var(--salud); }
+.section-card--accent-3 { border-top-color: var(--comunidad); }
+.section-card--accent-4 { border-top-color: var(--apoyo); }
+.section-card--accent-5 { border-top-color: var(--oro); }
+.section-card--accent-6 { border-top-color: #6C63AC; }
+.section-card--accent-7 { border-top-color: #C4697C; }
+
+/* Section pages inherit homepage accent as card top stripe */
+.section-theme--accent-1 { --section-accent: var(--bosque); }
+.section-theme--accent-2 { --section-accent: var(--salud); }
+.section-theme--accent-3 { --section-accent: var(--comunidad); }
+.section-theme--accent-4 { --section-accent: var(--apoyo); }
+.section-theme--accent-5 { --section-accent: var(--oro); }
+.section-theme--accent-6 { --section-accent: #6C63AC; }
+.section-theme--accent-7 { --section-accent: #C4697C; }
+
+[class*="section-theme--"] .topic-card,
+[class*="section-theme--"] .faq-item,
+[class*="section-theme--"] .section-accent-card {
+  border-top: 3px solid var(--section-accent) !important;
+}
+
+[class*="section-theme--"] .section-accent-card:hover {
+  box-shadow: 0 4px 16px rgba(46, 139, 122, 0.12);
+}
+
+.section-card__title {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--texto);
+}
+
+.section-card__desc {
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.6;
+  flex-grow: 1;
+}
+
+.section-card__arrow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-primary);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--bosque);
+  margin-top: auto;
+  margin-left: 0.35rem;
+  padding-top: 8px;
+  border-top: 1px solid rgba(46, 139, 122, 0.1);
+  transition: gap 0.2s ease, color 0.2s ease;
+}
+
+.section-card__arrow::after {
+  content: '';
+  display: inline-block;
+  width: 0.42em;
+  height: 0.42em;
+  margin-left: 0.15em;
+  border-right: 2.5px solid currentColor;
+  border-top: 2.5px solid currentColor;
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+.section-card:hover .section-card__arrow {
+  gap: 10px;
+  color: var(--comunidad);
+}
+
+/* --- Topic cards (section landing grids, e.g. Niños y Familias) --- */
+.topic-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 32px;
+}
+
+.topic-card {
+  background: #fff;
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  padding: 28px;
+  text-decoration: none;
+  display: block;
+  position: relative;
+  color: inherit;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.topic-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 28px rgba(46, 139, 122, 0.14);
+}
+
+.topic-card__header {
+  margin-bottom: 10px;
+}
+
+.topic-card__title {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 12px;
+  align-items: start;
+  color: var(--bosque);
+  font-weight: 700;
+  margin: 0;
+}
+
+.topic-card .cta-arrow {
+  position: static;
+  flex-shrink: 0;
+  color: var(--bosque);
+  /* Center of chevron ↔ center of first title line */
+  margin-top: calc((1.3rem * 1.4 - 0.55rem) / 2);
+  margin-top: calc((1lh - 0.55rem) / 2);
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.topic-card:hover .cta-arrow {
+  color: var(--comunidad);
+  transform: rotate(45deg) translate(3px, -3px);
+}
+
+.topic-card__desc {
+  color: var(--texto);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* --- Subpage Link Cards (Section index pages) --- */
+.subpage-cards {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.subpage-card {
+  background: #fff;
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  padding: 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.subpage-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(46, 139, 122, 0.12);
+  border-color: var(--salud);
+}
+
+.subpage-card__icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background-color: var(--fondo-claro);
+  color: var(--bosque);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.subpage-card__content {
+  flex: 1;
+}
+
+.subpage-card__title {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 1.12rem;
+  color: var(--texto);
+  margin-bottom: 4px;
+}
+
+.subpage-card__desc {
+  font-size: 0.92rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.subpage-card__arrow {
+  align-self: center;
+  color: var(--muted);
+  width: 0.55rem;
+  height: 0.55rem;
+  border-right: 3px solid currentColor;
+  border-top: 3px solid currentColor;
+  transform: rotate(45deg);
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.subpage-card:hover .subpage-card__arrow {
+  color: var(--comunidad);
+  transform: rotate(45deg) translate(3px, -3px);
+}
+
+/* --- Emergency Strip --- */
+.emergency-strip {
+  background-color: var(--oro);
+  padding: 16px 24px;
+}
+
+.emergency-strip__inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.emergency-strip__text {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--texto);
+}
+
+.emergency-strip__link {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: var(--texto);
+  color: #fff;
+  padding: 8px 20px;
+  border-radius: var(--btn-radius);
+  transition: background-color 0.2s ease;
+}
+
+.emergency-strip__link:hover {
+  background-color: #2a2220;
+}
+
+/* --- Info Box (for placeholder content areas) --- */
+.info-box {
+  background-color: var(--fondo-claro);
+  border-radius: var(--card-radius);
+  padding: 32px;
+  border: 1px solid rgba(46, 139, 122, 0.15);
+}
+
+/* --- Placeholder Content Block --- */
+.placeholder-content {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--section-padding-desktop) 24px;
+}
+
+.placeholder-block {
+  background: #fff;
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  padding: 48px 32px;
+  text-align: center;
+}
+
+.placeholder-block__icon {
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+}
+
+.placeholder-block__text {
+  font-family: var(--font-primary);
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--muted);
+}
+
+/* --- Breadcrumbs --- */
+.breadcrumbs {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: 16px 32px;
+  font-size: 0.95rem;
+}
+
+.breadcrumbs__list {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.breadcrumbs__item {
+  font-size: inherit;
+  color: var(--muted);
+}
+
+.breadcrumbs__link {
+  color: var(--bosque);
+  transition: color 0.2s ease;
+}
+
+.breadcrumbs__link:hover {
+  color: var(--comunidad);
+}
+
+.breadcrumbs__separator,
+.breadcrumbs__sep {
+  color: var(--muted);
+  font-size: 0.85em;
+}
+
+.breadcrumbs__current {
+  color: var(--muted);
+}
+
+/* --- Responsive --- */
+@media (max-width: 1024px) {
+  .section-cards__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .section-cards {
+    padding: var(--section-padding-mobile) 0;
+  }
+
+  .section-cards__grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .breadcrumbs {
+    padding: 16px 20px;
+  }
+
+  .subpage-cards {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .placeholder-content {
+    padding: var(--section-padding-mobile) 24px;
+  }
+
+  .placeholder-block {
+    padding: 32px 24px;
+  }
+
+  .emergency-strip__inner {
+    flex-direction: column;
+    gap: 12px;
+  }
+}

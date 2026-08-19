@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mercado de Seguros Médicos (Marketplace) — SaludSimple</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/hero.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/content.css">
+  <style>
+    .term-tip {
+      position: relative;
+      display: inline;
+      color: var(--salud);
+      font-weight: 700;
+      text-decoration: underline;
+      text-decoration-color: var(--salud);
+      text-underline-offset: 3px;
+      cursor: help;
+    }
+    .term-tip__box,
+    .term-tip__bubble {
+      position: absolute;
+      left: 50%;
+      bottom: calc(100% + 10px);
+      transform: translateX(-50%);
+      width: max-content;
+      max-width: min(260px, 70vw);
+      padding: 10px 12px;
+      background: #1f3d36;
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 400;
+      line-height: 1.4;
+      border-radius: 8px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.15s ease, visibility 0.15s ease;
+      z-index: 20;
+      text-align: left;
+      white-space: normal;
+      text-decoration: none;
+    }
+    .term-tip__box::after,
+    .term-tip__bubble::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-top-color: #1f3d36;
+    }
+    .term-tip:hover .term-tip__box,
+    .term-tip:focus-within .term-tip__box,
+    .term-tip:hover .term-tip__bubble,
+    .term-tip:focus-within .term-tip__bubble {
+      opacity: 1;
+      visibility: visible;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="site-navbar"></div>
+
+  <section class="section-hero">
+    <div class="section-hero__overlay"></div>
+    <div class="section-hero__content">
+      <h1 class="section-hero__title" data-es="Mercado de Seguros Médicos (Marketplace)" data-en="Health Insurance Marketplace" data-pt="Mercado de Seguros de Saúde (Marketplace)">Mercado de Seguros Médicos (Marketplace)</h1>
+    </div>
+  </section>
+
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="../index.html" class="breadcrumbs__link" data-es="Inicio" data-en="Home" data-pt="Início">Inicio</a>
+    <span class="breadcrumbs__sep">&rsaquo;</span>
+    <a href="index.html" class="breadcrumbs__link" data-es="Salud" data-en="Health" data-pt="Saúde">Salud</a>
+    <span class="breadcrumbs__sep">&rsaquo;</span>
+    <span class="breadcrumbs__current" data-es="Mercado de Seguros" data-en="Insurance Marketplace" data-pt="Mercado de Seguros">Mercado de Seguros</span>
+  </nav>
+
+  <main class="content-page">
+
+
+
+    <!-- ¿Qué es el Mercado de Seguros Médicos? -->
+    <section class="content-page__section">
+      <h2 class="content-page__section-title" data-es="¿Qué es el Mercado de Seguros Médicos?" data-en="What is Marketplace Health Insurance" data-pt="O que é o Mercado de Seguros de Saúde?">¿Qué es el Mercado de Seguros Médicos?</h2>
+      <p data-es="El Mercado de Seguros Médicos (Marketplace) es una plataforma donde puede comparar y solicitar planes de seguro médico. Los planes disponibles cumplen ciertos requisitos de cobertura y, dependiendo de sus ingresos, algunas personas pueden recibir ayuda financiera para reducir el costo del seguro." data-en="The Health Insurance Marketplace is a platform where you can compare and apply for health insurance plans. Available plans meet certain coverage requirements and, depending on your income, some people may receive financial assistance to reduce the cost of insurance." data-pt="O Mercado de Seguros de Saúde (Marketplace) é uma plataforma onde você pode comparar e solicitar planos de saúde. Os planos disponíveis atendem a certos requisitos de cobertura e, dependendo da sua renda, algumas pessoas podem receber ajuda financeira para reduzir o custo do plano.">El Mercado de Seguros Médicos (Marketplace) es una plataforma donde puede comparar y solicitar planes de seguro médico. Los planes disponibles cumplen ciertos requisitos de cobertura y, dependiendo de sus ingresos, algunas personas pueden recibir ayuda financiera para reducir el costo del seguro.</p>
+    </section>
+
+
+
+    <!-- ¿Quién puede usar el Marketplace? -->
+    <section class="content-page__section">
+      <h2 class="content-page__section-title" data-es="¿Quién puede usar el Marketplace?" data-en="Who Qualifies for Marketplace Insurance" data-pt="Quem pode usar o Marketplace?">¿Quién puede usar el Marketplace?</h2>
+      <p data-es="Muchas personas utilizan el Marketplace para obtener seguro médico cuando no tienen cobertura a través de un empleador, Medicaid, Medicare u otro programa." data-en="Many people use the Marketplace to get health insurance when they don't have coverage through an employer, Medicaid, Medicare, or another program." data-pt="Muitas pessoas usam o Marketplace para obter plano de saúde quando não têm cobertura por meio de um empregador, Medicaid, Medicare ou outro programa.">Muchas personas utilizan el Marketplace para obtener seguro médico cuando no tienen cobertura a través de un empleador, Medicaid, Medicare u otro programa.</p>
+      <p data-es="Puede ser una opción si:" data-en="It may be an option if:" data-pt="Pode ser uma opção se:">Puede ser una opción si:</p>
+      <ul>
+        <li data-es="No tiene seguro médico" data-en="You don't have health insurance" data-pt="Você não tem plano de saúde">No tiene seguro médico</li>
+        <li data-es="Su empleador no ofrece seguro médico" data-en="Your employer doesn't offer health insurance" data-pt="Seu empregador não oferece plano de saúde">Su empleador no ofrece seguro médico</li>
+        <li data-es="El seguro ofrecido por su empleador es demasiado costoso" data-en="The insurance offered by your employer is too expensive" data-pt="O plano oferecido pelo seu empregador é muito caro">El seguro ofrecido por su empleador es demasiado costoso</li>
+        <li data-es="No califica para Medicaid o CHIP" data-en="You don't qualify for Medicaid or CHIP" data-pt="Você não se qualifica para Medicaid ou CHIP">No califica para Medicaid o CHIP</li>
+        <li data-es="Perdió recientemente su cobertura médica" data-en="You recently lost your health coverage" data-pt="Você perdeu recentemente sua cobertura médica">Perdió recientemente su cobertura médica</li>
+      </ul>
+    </section>
+
+
+
+    <!-- ¿Cuándo puede solicitar un plan del Marketplace? -->
+    <section class="content-page__section">
+      <h2 class="content-page__section-title" data-es="¿Cuándo puede solicitar un plan del Marketplace?" data-en="When Can I Apply?" data-pt="Quando você pode solicitar um plano do Marketplace?">¿Cuándo puede solicitar un plan del Marketplace?</h2>
+      <p>
+        <span data-es="Generalmente, las personas pueden inscribirse durante el " data-en="Generally, people can enroll during the " data-pt="Geralmente, as pessoas podem se inscrever durante o ">Generalmente, las personas pueden inscribirse durante el </span><span class="term-tip" tabindex="0"><span data-es="período anual de inscripción abierta" data-en="annual open enrollment period" data-pt="período anual de inscrição aberta">período anual de inscripción abierta</span><span class="term-tip__bubble" role="tooltip" data-es="1 de noviembre – 15 de enero" data-en="November 1 – January 15" data-pt="1º de novembro – 15 de janeiro">1 de noviembre – 15 de enero</span></span><span data-es=". También puede haber períodos especiales de inscripción después de ciertos eventos de vida, como perder la cobertura médica, casarse, tener un hijo o mudarse." data-en=". There may also be special enrollment periods after certain life events, such as losing health coverage, getting married, having a child, or moving." data-pt=". Também pode haver períodos especiais de inscrição depois de certos eventos da vida, como perder a cobertura médica, casar-se, ter um filho ou mudar-se.">. También puede haber períodos especiales de inscripción después de ciertos eventos de vida, como perder la cobertura médica, casarse, tener un hijo o mudarse.</span>
+      </p>
+    </section>
+
+
+
+    <!-- ¿Cómo puedo solicitarlo? -->
+    <section class="content-page__section">
+      <h2 class="content-page__section-title" data-es="¿Cómo puedo solicitarlo?" data-en="How Can I Apply?" data-pt="Como posso solicitar?">¿Cómo puedo solicitarlo?</h2>
+      <p data-es="Puede comparar planes y presentar una solicitud a través del sitio oficial del Mercado de Seguros Médicos. Durante la solicitud, normalmente se le pedirá información sobre sus ingresos, las personas en su hogar y otra información necesaria para determinar si califica para ayuda financiera." data-en="You can compare plans and submit an application through the official Health Insurance Marketplace website. During the application, you will typically be asked for information about your income, the people in your household, and other information needed to determine if you qualify for financial assistance." data-pt="Você pode comparar planos e apresentar uma solicitação pelo site oficial do Mercado de Seguros de Saúde. Durante a solicitação, normalmente pedirão informações sobre sua renda, as pessoas da sua casa e outras informações necessárias para determinar se você se qualifica para ajuda financeira.">Puede comparar planes y presentar una solicitud a través del sitio oficial del Mercado de Seguros Médicos. Durante la solicitud, normalmente se le pedirá información sobre sus ingresos, las personas en su hogar y otra información necesaria para determinar si califica para ayuda financiera.</p>
+
+      <div style="background: #fff; border: 1px solid rgba(46,139,122,0.12); border-radius: 12px; padding: 24px 28px; margin-top: 16px; box-shadow: 0 2px 12px rgba(46,139,122,0.07);">
+        <div>
+          <h3 style="font-family: var(--font-primary); font-weight: 700; color: var(--bosque); margin: 0 0 4px;" data-es="Solicitar seguro médico del Marketplace" data-en="Apply for Marketplace medical insurance" data-pt="Solicitar plano de saúde do Marketplace">Solicitar seguro médico del Marketplace</h3>
+          <p style="margin: 0 0 6px;" data-es="Use el sitio oficial para comparar planes y presentar su solicitud." data-en="Use the official site to compare plans and submit your application." data-pt="Use o site oficial para comparar planos e apresentar sua solicitação.">Use el sitio oficial para comparar planes y presentar su solicitud.</p>
+          <p style="margin: 0 0 4px;"><a href="tel:8003182596" style="color: var(--bosque); font-weight: 700;" data-es="Llame al 1-800-318-2596" data-en="Call 1-800-318-2596" data-pt="Ligue para 1-800-318-2596">Llame al 1-800-318-2596</a></p>
+          <p style="margin: 0;"><a href="https://www.cuidadodesalud.gov/es/" target="_blank" rel="noopener noreferrer" style="color: var(--comunidad); font-weight: 700; text-decoration: none;" data-es="Solicitar en CuidadodeSalud.gov" data-en="Apply on HealthCare.gov" data-pt="Solicitar em CuidadodeSalud.gov">Solicitar en CuidadodeSalud.gov</a></p>
+        </div>
+
+        <div style="margin-top: 28px; padding-top: 28px; border-top: 1px solid rgba(46,139,122,0.14);">
+          <h3 style="font-family: var(--font-primary); font-weight: 700; color: var(--bosque); margin: 0 0 4px;" data-es="Ayuda local para aplicar o entender el Marketplace" data-en="Local help to apply or understand the Marketplace" data-pt="Ajuda local para se inscrever ou entender o Marketplace">Ayuda local para aplicar o entender el Marketplace</h3>
+          <p style="margin: 0 0 6px;" data-es="Ingrese su código postal para encontrar ayuda gratuita cerca de usted para solicitar o entender un plan del Marketplace." data-en="Enter your ZIP code to find free local help near you to apply for or understand a Marketplace plan." data-pt="Digite seu CEP para encontrar ajuda gratuita perto de você para solicitar ou entender um plano do Marketplace.">Ingrese su código postal para encontrar ayuda gratuita cerca de usted para solicitar o entender un plan del Marketplace.</p>
+          <p style="margin: 0 0 6px;">
+            <strong data-es="Consejo:" data-en="Tip:" data-pt="Dica:">Consejo:</strong><span data-es=" Al solicitar, pregunte si califica para ayuda financiera, incluyendo " data-en=" When applying, ask whether you qualify for financial help, including " data-pt=" Ao se inscrever, pergunte se você se qualifica para ajuda financeira, incluindo "> Al solicitar, pregunte si califica para ayuda financiera, incluyendo </span><strong data-es="créditos fiscales para las primas" data-en="premium tax credits" data-pt="créditos fiscais para as mensalidades">créditos fiscales para las primas</strong><span data-es=" o " data-en=" or " data-pt=" ou "> o </span><strong data-es="reducciones de costos compartidos" data-en="cost-sharing reductions" data-pt="reduções de custos compartilhados">reducciones de costos compartidos</strong><span data-es="." data-en="." data-pt=".">.</span>
+          </p>
+          <p style="margin: 0;"><a href="https://www.cuidadodesalud.gov/es/find-local-help/" target="_blank" rel="noopener noreferrer" style="color: var(--comunidad); font-weight: 700; text-decoration: none;" data-es="Encontrar ayuda local" data-en="Find local help" data-pt="Encontrar ajuda local">Encontrar ayuda local</a></p>
+        </div>
+
+        <div class="content-page__important" style="margin-top: 28px; margin-bottom: 0;">
+          <p class="content-page__important-title" data-es="Antes de elegir un plan:" data-en="Before choosing a plan:" data-pt="Antes de escolher um plano:">Antes de elegir un plan:</p>
+          <p data-es="No solo compare el precio mensual. Un plan más barato puede tener costos más altos cuando necesite atención médica. Revise que sus médicos, medicamentos y centros de atención estén cubiertos." data-en="Don't just compare the monthly price. A cheaper plan may have higher costs when you need medical care. Make sure your doctors, medications, and care centers are covered." data-pt="Não compare apenas o preço mensal. Um plano mais barato pode ter custos mais altos quando você precisar de atendimento médico. Verifique se seus médicos, medicamentos e centros de atendimento estão cobertos.">No solo compare el precio mensual. Un plan más barato puede tener costos más altos cuando necesite atención médica. Revise que sus médicos, medicamentos y centros de atención estén cubiertos.</p>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- ¿Cómo elegir un plan? -->
+    <section class="content-page__section content-page__collapse">
+      <h2 class="content-page__section-title content-page__collapse-heading">
+        <button type="button" class="content-page__collapse-trigger" aria-expanded="false" aria-controls="marketplace-choose-plan-panel" id="marketplace-choose-plan-trigger">
+          <span data-es="¿Cómo elegir un plan?" data-en="How Do I Choose a Plan?" data-pt="Como escolher um plano?">¿Cómo elegir un plan?</span>
+          <span class="content-page__collapse-chevron" aria-hidden="true"></span>
+        </button>
+      </h2>
+      <div class="content-page__collapse-panel" id="marketplace-choose-plan-panel" role="region" aria-labelledby="marketplace-choose-plan-trigger" hidden>
+        <div style="background: #fff; border: 1px solid rgba(46,139,122,0.12); border-radius: 12px; padding: 24px 28px; box-shadow: 0 2px 12px rgba(46,139,122,0.07);">
+      <p data-es="Antes de elegir un plan, considere:" data-en="Before choosing a plan, consider:" data-pt="Antes de escolher um plano, considere:">Antes de elegir un plan, considere:</p>
+
+      <h3 style="font-family: var(--font-primary); font-weight: 700; font-size: 1.1rem; color: var(--bosque); margin: 24px 0 12px;" data-es="Sus necesidades médicas" data-en="Your Medical Needs" data-pt="Suas necessidades médicas">Sus necesidades médicas</h3>
+      <ul>
+        <li data-es="¿Tiene médicos que desea continuar viendo?" data-en="Do you have doctors you want to keep seeing?" data-pt="Você tem médicos que deseja continuar consultando?">¿Tiene médicos que desea continuar viendo?</li>
+        <li data-es="¿Toma medicamentos regularmente?" data-en="Do you take medications regularly?" data-pt="Você toma medicamentos regularmente?">¿Toma medicamentos regularmente?</li>
+        <li data-es="¿Necesita especialistas?" data-en="Do you need specialists?" data-pt="Você precisa de especialistas?">¿Necesita especialistas?</li>
+      </ul>
+
+      <h3 style="font-family: var(--font-primary); font-weight: 700; font-size: 1.1rem; color: var(--bosque); margin: 24px 0 12px;" data-es="Los costos" data-en="The Costs" data-pt="Os custos">Los costos</h3>
+      <p data-es="No solo revise la prima mensual. También considere:" data-en="Don't just review the monthly premium. Also consider:" data-pt="Não analise apenas a mensalidade. Considere também:">No solo revise la prima mensual. También considere:</p>
+      <ul>
+        <li>
+          <span class="term-tip" tabindex="0">
+            <span data-es="Deducible" data-en="Deductible" data-pt="Franquia (dedutível)">Deducible</span>
+            <span class="term-tip__box" role="tooltip" data-es="La cantidad que paga antes de que su seguro comience a cubrir costos." data-en="The amount you pay before your insurance starts covering costs." data-pt="O valor que você paga antes que o plano comece a cobrir os custos.">La cantidad que paga antes de que su seguro comience a cubrir costos.</span>
+          </span>
+        </li>
+        <li>
+          <span class="term-tip" tabindex="0">
+            <span data-es="Copagos" data-en="Copays" data-pt="Coparticipações">Copagos</span>
+            <span class="term-tip__box" role="tooltip" data-es="Cantidad fija que paga por un servicio médico." data-en="A fixed amount you pay for a medical service." data-pt="Valor fixo que você paga por um serviço médico.">Cantidad fija que paga por un servicio médico.</span>
+          </span>
+        </li>
+        <li>
+          <span class="term-tip" tabindex="0">
+            <span data-es="Coseguro" data-en="Coinsurance" data-pt="Cosseguro">Coseguro</span>
+            <span class="term-tip__box" role="tooltip" data-es="El porcentaje del costo que usted paga después del deducible." data-en="The percentage of the cost you pay after meeting your deductible." data-pt="A porcentagem do custo que você paga depois da franquia (dedutível).">El porcentaje del costo que usted paga después del deducible.</span>
+          </span>
+        </li>
+        <li>
+          <span class="term-tip" tabindex="0">
+            <span data-es="Máximo de gastos de su bolsillo" data-en="Out-of-pocket maximum" data-pt="Máximo de despesas do próprio bolso">Máximo de gastos de su bolsillo</span>
+            <span class="term-tip__box" role="tooltip" data-es="Lo máximo que pagará en un año antes de que el seguro cubra el resto." data-en="The most you will pay in a year before insurance covers the rest." data-pt="O máximo que você pagará em um ano antes que o plano cubra o restante.">Lo máximo que pagará en un año antes de que el seguro cubra el resto.</span>
+          </span>
+        </li>
+      </ul>
+
+      <h3 style="font-family: var(--font-primary); font-weight: 700; font-size: 1.1rem; color: var(--bosque); margin: 24px 0 12px;" data-es="Los proveedores disponibles" data-en="Available Providers" data-pt="Os prestadores disponíveis">Los proveedores disponibles</h3>
+      <ul>
+        <li data-es="¿Sus médicos están dentro de la red?" data-en="Are your doctors in-network?" data-pt="Seus médicos estão dentro da rede?">¿Sus médicos están dentro de la red?</li>
+        <li data-es="¿Los hospitales y clínicas que utiliza aceptan ese plan?" data-en="Do the hospitals and clinics you use accept that plan?" data-pt="Os hospitais e clínicas que você usa aceitam esse plano?">¿Los hospitales y clínicas que utiliza aceptan ese plan?</li>
+      </ul>
+      <p style="margin-top: 20px;"><a href="../sistema/comparar-planes.html" class="link-cta" style="color: var(--comunidad); font-weight: 700; text-decoration: none;" data-es="Aprenda más" data-en="Learn more" data-pt="Saiba mais">Aprenda más</a></p>
+    
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- ¿Qué pasa si no puedo pagar un plan? -->
+    <section class="content-page__section content-page__collapse">
+      <h2 class="content-page__section-title content-page__collapse-heading">
+        <button type="button" class="content-page__collapse-trigger" aria-expanded="false" aria-controls="marketplace-cant-afford-panel" id="marketplace-cant-afford-trigger">
+          <span data-es="¿Qué pasa si no puedo pagar un plan?" data-en="What If I Can't Afford a Plan?" data-pt="O que acontece se eu não puder pagar um plano?">¿Qué pasa si no puedo pagar un plan?</span>
+          <span class="content-page__collapse-chevron" aria-hidden="true"></span>
+        </button>
+      </h2>
+      <div class="content-page__collapse-panel" id="marketplace-cant-afford-panel" role="region" aria-labelledby="marketplace-cant-afford-trigger" hidden>
+      <p data-es="Si el costo de un plan del Marketplace no es accesible para usted, todavía puede tener otras opciones:" data-en="If the cost of a Marketplace plan is not affordable for you, you may still have other options:" data-pt="Se o custo de um plano do Marketplace não for acessível para você, ainda pode ter outras opções:">Si el costo de un plan del Marketplace no es accesible para usted, todavía puede tener otras opciones:</p>
+      <ul>
+        <li><a href="medicaid-chip.html" class="link-cta" style="color: var(--comunidad); font-weight: 700; text-decoration: none;" data-es="Verificar si califica para Medicaid o CHIP" data-en="Check if you qualify for Medicaid or CHIP" data-pt="Verificar se você se qualifica para Medicaid ou CHIP">Verificar si califica para Medicaid o CHIP</a></li>
+        <li><a href="atencion-bajo-costo.html" class="link-cta" style="color: var(--comunidad); font-weight: 700; text-decoration: none;" data-es="Buscar clínicas comunitarias o atención médica de bajo costo" data-en="Find community clinics or low-cost medical care" data-pt="Buscar clínicas comunitárias ou atendimento médico de baixo custo">Buscar clínicas comunitarias o atención médica de bajo costo</a></li>
+        <li><a href="../medicamentos/recursos-rapidos.html" class="link-cta" style="color: var(--comunidad); font-weight: 700; text-decoration: none;" data-es="Explorar programas de asistencia para medicamentos u otros recursos" data-en="Explore medication assistance programs or other resources" data-pt="Explorar programas de assistência para medicamentos ou outros recursos">Explorar programas de asistencia para medicamentos u otros recursos</a></li>
+      </ul>
+    
+      </div>
+    </section>
+
+
+
+    <!-- Preguntas frecuentes -->
+    <section class="content-page__section">
+      <h2 class="content-page__section-title" data-es="Preguntas frecuentes" data-en="Frequently Asked Questions" data-pt="Perguntas frequentes">Preguntas frecuentes</h2>
+
+      <div style="background: #fff; border: 1px solid rgba(46,139,122,0.12); border-radius: 12px; padding: 18px 24px; margin-bottom: 12px;">
+        <p style="font-family: var(--font-primary); font-weight: 700; font-size: 1rem; color: var(--bosque); margin-bottom: 8px;" data-es="¿El Marketplace es lo mismo que Medicaid?" data-en="Is the Marketplace the same as Medicaid?" data-pt="O Marketplace é a mesma coisa que o Medicaid?">¿El Marketplace es lo mismo que Medicaid?</p>
+        <p data-es="No. Medicaid es un programa público de seguro médico administrado por cada estado. El Marketplace permite comparar planes de seguro médico privados y solicitar ayuda financiera si cumple con los requisitos." data-en="No. Medicaid is a public health insurance program administered by each state. The Marketplace allows you to compare private health insurance plans and apply for financial assistance if you meet the requirements." data-pt="Não. O Medicaid é um programa público de plano de saúde administrado por cada estado. O Marketplace permite comparar planos de saúde privados e solicitar ajuda financeira se você atender aos requisitos.">No. Medicaid es un programa público de seguro médico administrado por cada estado. El Marketplace permite comparar planes de seguro médico privados y solicitar ayuda financiera si cumple con los requisitos.</p>
+      </div>
+
+      <div style="background: #fff; border: 1px solid rgba(46,139,122,0.12); border-radius: 12px; padding: 18px 24px; margin-bottom: 12px;">
+        <p style="font-family: var(--font-primary); font-weight: 700; font-size: 1rem; color: var(--bosque); margin-bottom: 8px;" data-es="¿Puedo solicitar un plan si no soy ciudadano?" data-en="Can I apply for a plan if I'm not a citizen?" data-pt="Posso solicitar um plano se não for cidadão?">¿Puedo solicitar un plan si no soy ciudadano?</p>
+        <p data-es="Los requisitos para solicitar cobertura y recibir ayuda financiera dependen de su situación migratoria y de las reglas actuales del programa. Revise los requisitos del Marketplace para conocer sus opciones." data-en="The requirements for applying for coverage and receiving financial assistance depend on your immigration status and the current program rules. Review the Marketplace requirements to learn about your options." data-pt="Os requisitos para solicitar cobertura e receber ajuda financeira dependem da sua situação migratória e das regras atuais do programa. Revise os requisitos do Marketplace para conhecer suas opções.">Los requisitos para solicitar cobertura y recibir ayuda financiera dependen de su situación migratoria y de las reglas actuales del programa. Revise los requisitos del Marketplace para conocer sus opciones.</p>
+      </div>
+
+      <div style="background: #fff; border: 1px solid rgba(46,139,122,0.12); border-radius: 12px; padding: 18px 24px; margin-bottom: 12px;">
+        <p style="font-family: var(--font-primary); font-weight: 700; font-size: 1rem; color: var(--bosque); margin-bottom: 8px;" data-es="¿Qué pasa si pierdo mi seguro del trabajo?" data-en="What happens if I lose my employer insurance?" data-pt="O que acontece se eu perder o plano de saúde do trabalho?">¿Qué pasa si pierdo mi seguro del trabajo?</p>
+        <p data-es="Perder la cobertura del trabajo puede permitirle solicitar un plan durante un período especial de inscripción." data-en="Losing your employer coverage may allow you to apply for a plan during a special enrollment period." data-pt="Perder a cobertura do trabalho pode permitir que você solicite um plano durante um período especial de inscrição.">Perder la cobertura del trabajo puede permitirle solicitar un plan durante un período especial de inscripción.</p>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="../js/includes.js"></script>
+</body>
+</html>
