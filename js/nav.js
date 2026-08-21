@@ -130,7 +130,8 @@
           }
           if (hamburger) hamburger.classList.remove('active');
         } else {
-          navbar.classList.remove('navbar--brand-compact');
+          /* Shrink the brand name a bit with the hamburger — never hide it */
+          navbar.classList.add('navbar--brand-compact');
           navbar.classList.add('navbar--compact');
         }
 

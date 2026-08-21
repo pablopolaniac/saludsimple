@@ -241,7 +241,14 @@
     font-size: 2.2rem;
   }
 
+  .hero__title-lead {
+    /* Avoid orphan words from desktop line breaks on narrow screens */
+    white-space: normal;
+  }
+
   .hero__title-accent {
+    /* Flow after the lead ("Ayuda. Comunidad") instead of forcing a new block line */
+    display: inline;
     white-space: normal;
   }
 

@@ -354,14 +354,6 @@
     return '';
   }
 
-  function languageLabel(raw) {
-    var code = normalizeLangCode(raw);
-    if (code === 'es') return t({ es: 'Español', en: 'Spanish', pt: 'Espanhol' });
-    if (code === 'en') return t({ es: 'Inglés', en: 'English', pt: 'Inglês' });
-    if (code === 'pt') return t({ es: 'Portugués', en: 'Portuguese', pt: 'Português' });
-    return raw ? String(raw) : '';
-  }
-
   function orgName(data, orgId) {
     if (!orgId || !data || !data.organizations) return '';
     var id = String(orgId);
@@ -509,19 +501,6 @@
     return (titleText || t({ es: 'Abrir sitio →', en: 'Open site →', pt: 'Abrir site →' })) + ' →';
   }
 
-  function languageMetaHtml(resource) {
-    var lang = languageLabel(resource.language);
-    if (!lang) return '';
-    return (
-      '<p class="resource-finder__meta">' +
-      '<span class="resource-finder__meta-item">' +
-      t({ es: 'Idioma:', en: 'Language:', pt: 'Idioma:' }) +
-      ' ' +
-      escapeHtml(lang) +
-      '</span></p>'
-    );
-  }
-
   function splitPhoneNumbers(raw) {
     return String(raw || '')
       .split(/\s*[;|]\s*/)
@@ -664,7 +643,6 @@
       '">' +
       linkHtml +
       hintHtml +
-      languageMetaHtml(resource) +
       phoneHtml(resource) +
       '</article>'
     );
@@ -692,7 +670,6 @@
     var organization = escapeHtml(orgName(data, resource.org_id));
 
     var metaParts = [];
-    var langLine = languageMetaHtml(resource);
     if (organization) {
       metaParts.push(
         '<span class="resource-finder__meta-item">' +
@@ -739,7 +716,6 @@
         : '') +
       phoneHtml(resource) +
       linkHtml +
-      langLine +
       '</article>'
     );
   }
