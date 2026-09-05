@@ -580,9 +580,9 @@ window.__SITE_SEARCH_INDEX__ = [
     categoryEs: 'Diagnóstico',
     categoryEn: 'Diagnosis',
     categoryPt: 'Diagnóstico',
-    summaryEs: 'Recursos para autismo, TDAH, diabetes, parálisis cerebral e IEP/504.',
-    summaryEn: 'Resources for autism, ADHD, diabetes, cerebral palsy, and IEP/504.',
-    summaryPt: 'Recursos para autismo, TDAH, diabetes, paralisia cerebral e IEP/504.',
+    summaryEs: 'Recursos para autismo, TDAH, diabetes, parálisis cerebral, epilepsia e IEP/504.',
+    summaryEn: 'Resources for autism, ADHD, diabetes, cerebral palsy, epilepsy, and IEP/504.',
+    summaryPt: 'Recursos para autismo, TDAH, diabetes, paralisia cerebral, epilepsia e IEP/504.',
     keywords: [
       'diagnóstico', 'discapacidad', 'disability', 'condición',
       'recursos por enfermedad'
@@ -679,6 +679,22 @@ window.__SITE_SEARCH_INDEX__ = [
     summaryPt: 'Informações e recursos sobre paralisia cerebral.',
     keywords: [
       'parálisis cerebral', 'cerebral palsy', 'cp', 'movimiento', 'músculos'
+    ]
+  },
+  {
+    url: 'recursos-diagnostico/epilepsia.html',
+    titleEs: 'Epilepsia',
+    titleEn: 'Epilepsy',
+    titlePt: 'Epilepsia',
+    categoryEs: 'Diagnóstico',
+    categoryEn: 'Diagnosis',
+    categoryPt: 'Diagnóstico',
+    summaryEs: 'Información sobre epilepsia, qué hacer ante una convulsión y recursos por estado.',
+    summaryEn: 'Information about epilepsy, what to do during a seizure, and state resources.',
+    summaryPt: 'Informações sobre epilepsia, o que fazer durante uma convulsão e recursos por estado.',
+    keywords: [
+      'epilepsia', 'epilepsy', 'convulsión', 'convulsion', 'crisis epiléptica',
+      'seizure', 'epilepsy foundation'
     ]
   },
   {

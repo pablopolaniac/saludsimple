@@ -74,7 +74,7 @@
     }
   }
 
-  /* Prefer full links; hide site name only if needed; burger as last resort */
+  /* Prefer full preferred desktop nav; burger only when contents genuinely don't fit */
   function initNavFit() {
     var navbar = document.querySelector('.navbar');
     var inner = document.querySelector('.navbar__inner');
@@ -93,59 +93,164 @@
       for (var i = 0; i < items.length; i++) {
         total += Math.ceil(items[i].getBoundingClientRect().width);
       }
-      /* include flex gaps between items */
       var styles = window.getComputedStyle(links);
       var gap = parseFloat(styles.columnGap || styles.gap) || 0;
       if (items.length > 1) total += Math.ceil(gap * (items.length - 1));
       return total;
     }
 
+    function innerGap() {
+      var styles = window.getComputedStyle(inner);
+      return parseFloat(styles.columnGap || styles.gap) || 0;
+    }
+
     function measureNeeded() {
-      return brand.offsetWidth + linksContentWidth() + lang.offsetWidth + 16 + 24;
+      /* Natural widths of logo+name, full links, and lang toggle (hamburger hidden while measuring) */
+      var gap = innerGap();
+      return (
+        Math.ceil(brand.getBoundingClientRect().width) +
+        linksContentWidth() +
+        Math.ceil(lang.getBoundingClientRect().width) +
+        Math.ceil(gap * 2)
+      );
+    }
+
+    function rectsOverlap(a, b, pad) {
+      return a.right > b.left - pad && a.left < b.right + pad;
+    }
+
+    function hasCollision() {
+      if (window.getComputedStyle(links).display === 'none') return false;
+      var linksBox = links.getBoundingClientRect();
+      var brandBox = brand.getBoundingClientRect();
+      var rightBox = right.getBoundingClientRect();
+      var innerBox = inner.getBoundingClientRect();
+      if (linksBox.width < 1) return false;
+      /* Nothing may be pushed beyond the visible container edge */
+      if (rightBox.right > innerBox.right + 1) return true;
+      if (brandBox.left < innerBox.left - 1) return true;
+      /* Links block must not cover logo/name */
+      if (rectsOverlap(linksBox, brandBox, 2)) return true;
+      /* Last nav item must not reach into the right section (lang toggle) */
+      var items = links.children;
+      if (items.length) {
+        var lastItem = items[items.length - 1].getBoundingClientRect();
+        if (lastItem.right > rightBox.left - 4) return true;
+      }
+      /* Individual nav items must not overlap each other */
+      for (var i = 1; i < items.length; i++) {
+        var prev = items[i - 1].getBoundingClientRect();
+        var curr = items[i].getBoundingClientRect();
+        if (prev.right > curr.left + 1) return true;
+      }
+      return false;
+    }
+
+    function clearModes() {
+      navbar.classList.remove('navbar--measuring');
+      navbar.classList.remove('navbar--compact');
+      navbar.classList.remove('navbar--wrap');
+      navbar.classList.remove('navbar--brand-sm');
+    }
+
+    function applyCompact(compact) {
+      if (compact) {
+        navbar.classList.add('navbar--compact');
+      } else {
+        navbar.classList.remove('navbar--compact');
+        if (document.querySelector('.mobile-drawer')) {
+          document.querySelector('.mobile-drawer').classList.remove('open');
+        }
+        if (hamburger) hamburger.classList.remove('active');
+      }
     }
 
     function updateFit() {
       if (measuring) return;
       measuring = true;
 
+      /* Stage 1: measure single-line (all labels nowrap) */
+      clearModes();
       navbar.classList.add('navbar--measuring');
-      navbar.classList.remove('navbar--compact');
-      navbar.classList.remove('navbar--brand-compact');
 
       requestAnimationFrame(function () {
-        var available = inner.clientWidth;
-        var fits = measureNeeded() <= available;
-
-        if (!fits) {
-          navbar.classList.add('navbar--brand-compact');
-          fits = measureNeeded() <= available;
-        }
+        var styles = window.getComputedStyle(inner);
+        var available =
+          inner.clientWidth -
+          (parseFloat(styles.paddingLeft) || 0) -
+          (parseFloat(styles.paddingRight) || 0);
+        var singleLineFits = measureNeeded() <= available;
 
         navbar.classList.remove('navbar--measuring');
 
-        if (fits) {
-          navbar.classList.remove('navbar--compact');
-          if (document.querySelector('.mobile-drawer')) {
-            document.querySelector('.mobile-drawer').classList.remove('open');
-          }
-          if (hamburger) hamburger.classList.remove('active');
-        } else {
-          /* Shrink the brand name a bit with the hamburger — never hide it */
-          navbar.classList.add('navbar--brand-compact');
-          navbar.classList.add('navbar--compact');
+        if (singleLineFits) {
+          navbar.classList.remove('navbar--wrap');
+          applyCompact(false);
+          measuring = false;
+          return;
         }
 
-        measuring = false;
+        /* Stage 2: enable two-line wrapping, check for any collision */
+        navbar.classList.add('navbar--wrap');
+        applyCompact(false);
+
+        requestAnimationFrame(function () {
+          if (!hasCollision()) {
+            /* Safety: one more frame to catch late reflow */
+            requestAnimationFrame(function () {
+              if (hasCollision()) {
+                navbar.classList.remove('navbar--wrap');
+                navbar.classList.remove('navbar--brand-sm');
+                applyCompact(true);
+              }
+              measuring = false;
+            });
+            return;
+          }
+
+          /* Stage 2b: also shrink brand name slightly */
+          navbar.classList.add('navbar--brand-sm');
+
+          requestAnimationFrame(function () {
+            if (!hasCollision()) {
+              requestAnimationFrame(function () {
+                if (hasCollision()) {
+                  navbar.classList.remove('navbar--wrap');
+                  navbar.classList.remove('navbar--brand-sm');
+                  applyCompact(true);
+                }
+                measuring = false;
+              });
+              return;
+            }
+            /* Stage 3: still collides — hamburger */
+            navbar.classList.remove('navbar--wrap');
+            navbar.classList.remove('navbar--brand-sm');
+            applyCompact(true);
+            measuring = false;
+          });
+        });
       });
     }
 
     updateFit();
     window.addEventListener('resize', updateFit);
+    window.addEventListener('load', updateFit);
+
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () {
+        updateFit();
+      });
+    }
 
     document.addEventListener('click', function (e) {
       if (e.target.closest && e.target.closest('.lang-toggle__btn')) {
         setTimeout(updateFit, 60);
       }
+    });
+
+    document.addEventListener('saludsimple:langchange', function () {
+      setTimeout(updateFit, 60);
     });
   }
 

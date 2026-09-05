@@ -36,8 +36,11 @@
 
   function cellValue(cell) {
     if (!cell) return null;
+    // Prefer formatted text when present — gviz nulls multi-value numeric cells like "8,9"
+    if (cell.f !== undefined && cell.f !== null && String(cell.f).trim() !== '') {
+      return cell.f;
+    }
     if (cell.v !== undefined && cell.v !== null) return cell.v;
-    if (cell.f !== undefined && cell.f !== null) return cell.f;
     return null;
   }
 
@@ -154,7 +157,7 @@
     for (var k in row) {
       if (Object.prototype.hasOwnProperty.call(row, k)) item[k] = row[k];
     }
-    item.active = isTruthy(item.active);
+    item.active = item.active == null || String(item.active).trim() === '' ? true : isTruthy(item.active);
     item.resource_type_id = stringifyId(item.resource_type_id);
     item.state_id = item.state_id != null ? String(item.state_id).trim().toUpperCase() : null;
     item.program_id =
@@ -222,12 +225,57 @@
     return Promise.reject(new Error('No embedded resource fallback available'));
   }
 
+  function mergeWithFallback(live) {
+    var fallback = typeof window !== 'undefined' ? window.SALUD_RESOURCES : null;
+    if (!live || !fallback || !fallback.resources || !fallback.resources.length) return live;
+
+    var byId = {};
+    for (var i = 0; i < fallback.resources.length; i++) {
+      var fr = fallback.resources[i];
+      if (fr && fr.resource_id != null) byId[String(fr.resource_id)] = fr;
+    }
+
+    var liveIds = {};
+    for (var j = 0; j < (live.resources || []).length; j++) {
+      var r = live.resources[j];
+      if (!r) continue;
+      var id = r.resource_id != null ? String(r.resource_id) : '';
+      if (id) liveIds[id] = true;
+      var fb = id ? byId[id] : null;
+      if (!fb) continue;
+      // Restore fields gviz often drops (multi-value type ids, etc.)
+      if (!r.resource_type_id && fb.resource_type_id) r.resource_type_id = fb.resource_type_id;
+      if (!r.phone && fb.phone) r.phone = fb.phone;
+      if (!r.url && fb.url) r.url = fb.url;
+      if (!r.title && fb.title) r.title = fb.title;
+      if ((!r.state_id || r.state_id === 'NULL') && fb.state_id) r.state_id = fb.state_id;
+    }
+
+    // Add any fallback resources missing from the live payload
+    for (var k = 0; k < fallback.resources.length; k++) {
+      var extra = fallback.resources[k];
+      if (!extra || extra.resource_id == null) continue;
+      var eid = String(extra.resource_id);
+      if (liveIds[eid]) continue;
+      if (extra.active === false) continue;
+      live.resources.push(extra);
+      liveIds[eid] = true;
+    }
+
+    live.source = (live.source || 'google_sheet') + '+fallback_merge';
+    return live;
+  }
+
   function loadData() {
     if (dataCache) return Promise.resolve(dataCache);
     if (dataPromise) return dataPromise;
 
     // Prefer live Google Sheet so non-technical editors never run a sync script.
+    // Merge with embedded fallback so multi-value type cells (e.g. "8,9") are not lost.
     dataPromise = loadFromGoogleSheet()
+      .then(function (live) {
+        return mergeWithFallback(live);
+      })
       .catch(function (err) {
         console.warn('Live Google Sheet load failed; using fallback data.', err);
         return loadFallbackData();
@@ -409,6 +457,7 @@
     // Sheet imports sometimes used generic placeholders
     if (/resources?\s+resource$/i.test(s)) return true;
     if (/^autism resources?$/i.test(s)) return true;
+    if (/\bautism resources?\s+resource\b/i.test(s)) return true;
     return false;
   }
 
@@ -502,12 +551,42 @@
   }
 
   function splitPhoneNumbers(raw) {
-    return String(raw || '')
-      .split(/\s*[;|]\s*/)
-      .map(function (p) {
-        return p.trim();
-      })
-      .filter(Boolean);
+    return extractPhoneNumbers(raw);
+  }
+
+  function isHelpline8008(value) {
+    var dig = String(value || '').replace(/[^\d]/g, '');
+    if (!dig) return false;
+    return dig.slice(-4) === '8008';
+  }
+
+  function extractPhoneNumbers(raw) {
+    var text = String(raw || '');
+    text = text.replace(/\bMail\s+\S+@\S+/gi, ' ');
+    text = text.replace(/\bfirst\s+then\b/gi, ' ');
+    text = text.replace(/\bCall\b/gi, ' ');
+    text = text.replace(/\bor\b/gi, ' ');
+
+    var matches = text.match(/(?:\+?1[\s.-]*)?(?:\(?\d{3}\)?[\s.-]*)\d{3}[\s.-]*\d{4}/g) || [];
+    var seen = {};
+    var phones = [];
+    for (var i = 0; i < matches.length; i++) {
+      var part = matches[i].trim();
+      var dig = part.replace(/[^\d]/g, '');
+      if (dig.length < 10) continue;
+      var key = dig.slice(-10);
+      if (seen[key]) continue;
+      seen[key] = true;
+      phones.push(part);
+    }
+
+    var local = [];
+    var helpline = [];
+    for (var j = 0; j < phones.length; j++) {
+      if (isHelpline8008(phones[j])) helpline.push(phones[j]);
+      else local.push(phones[j]);
+    }
+    return local.concat(helpline);
   }
 
   function phoneDigits(raw) {
@@ -553,32 +632,76 @@
     return 'tel:' + digits;
   }
 
+  function phoneOrdinalLabel(index) {
+    if (index <= 0) {
+      return t({ es: 'Teléfono:', en: 'Phone:', pt: 'Telefone:' });
+    }
+    if (index === 1) {
+      return t({ es: 'Teléfono 2:', en: 'Phone 2:', pt: 'Telefone 2:' });
+    }
+    if (index === 2) {
+      return t({ es: 'Teléfono 3:', en: 'Phone 3:', pt: 'Telefone 3:' });
+    }
+    return t({
+      es: 'Teléfono ' + (index + 1) + ':',
+      en: 'Phone ' + (index + 1) + ':',
+      pt: 'Telefone ' + (index + 1) + ':'
+    });
+  }
+
   function phoneHtml(resource) {
     if (!resource.phone) return '';
-    var parts = splitPhoneNumbers(resource.phone);
+    var parts = extractPhoneNumbers(resource.phone);
     if (!parts.length) return '';
 
+    var localCount = 0;
+    for (var c = 0; c < parts.length; c++) {
+      if (!isHelpline8008(parts[c])) localCount += 1;
+    }
+
+    var localIndex = 0;
     var lines = parts.map(function (part) {
       var digits = phoneDigits(part);
+      var helpline = isHelpline8008(part);
       var channel = phoneChannelFor(resource, part, digits);
       var href = phoneHref(channel.kind, digits);
       var external = channel.kind === 'whatsapp';
+      var label = helpline
+        ? t({ es: 'Teléfono:', en: 'Phone:', pt: 'Telefone:' })
+        : phoneOrdinalLabel(localIndex++);
+      // Prefer clean display for extracted numbers
+      var display = part;
       return (
         '<p class="resource-finder__phone">' +
         '<span class="resource-finder__phone-label">' +
-        escapeHtml(channel.label) +
+        escapeHtml(label) +
         '</span> ' +
         '<a href="' +
         escapeHtml(href) +
         '"' +
         (external ? ' target="_blank" rel="noopener noreferrer"' : '') +
         '>' +
-        escapeHtml(part) +
+        escapeHtml(display) +
         '</a></p>'
       );
     });
 
-    return '<div class="resource-finder__phones">' + lines.join('') + '</div>';
+    var note = '';
+    if (localCount > 0 && /8008/.test(String(resource.phone))) {
+      note =
+        '<p class="resource-finder__item-hint lang-hide-en">' +
+        t({
+          es:
+            'Si el número indicado no lo conecta, llame al 1-866-748-8008. Esa línea sí puede conectarlo con alguien en español.',
+          en:
+            'If the listed number does not connect you, call 1-866-748-8008. That line can connect you with someone in Spanish.',
+          pt:
+            'Se o número indicado não conectar, ligue para 1-866-748-8008. Essa linha pode conectá-lo com alguém em espanhol.'
+        }) +
+        '</p>';
+    }
+
+    return '<div class="resource-finder__phones">' + lines.join('') + note + '</div>';
   }
 
   function compactHintForUrl(url) {
@@ -603,14 +726,143 @@
     return '';
   }
 
-  function renderCompactItem(resource) {
+  /* Sheet notes are often English-only; map known language-tip patterns to site language */
+  function localizeAutismNote(rawNote) {
+    if (!rawNote) return '';
+    var note = String(rawNote).replace(/\s+/g, ' ').trim();
+    if (!note) return '';
+    var lower = note.toLowerCase();
+
+    if (/world\s+icon|icono\s+del?\s+mundo|ícone\s+do\s+mundo/i.test(lower)) {
+      return t({
+        es: 'Puede cambiar el idioma en la esquina superior derecha (ícono del mundo).',
+        en: 'Change the language in the top right corner with the world icon.',
+        pt: 'Você pode mudar o idioma no canto superior direito (ícone do mundo).'
+      });
+    }
+    if (/upper\s+right|top\s+right|esquina\s+superior|parte\s+superior\s+derecha|canto\s+superior\s+direito/i.test(lower)) {
+      return t({
+        es: 'Puede cambiar el idioma en la esquina superior derecha.',
+        en: 'Change language in the upper right corner.',
+        pt: 'Você pode mudar o idioma no canto superior direito.'
+      });
+    }
+    if (/bottom\s+right|inferior\s+y\s+a\s+la\s+derecha|parte\s+inferior.*derecha|canto\s+inferior\s+direito/i.test(lower)) {
+      return t({
+        es: 'Puede cambiar el idioma en la parte inferior derecha.',
+        en: 'Change language at the bottom right.',
+        pt: 'Você pode mudar o idioma na parte inferior direita.'
+      });
+    }
+    if (/at\s+the\s+bottom|parte\s+abajo|parte\s+inferior|na\s+parte\s+de\s+baixo|no\s+rodapé/i.test(lower)) {
+      return t({
+        es: 'Puede cambiar el idioma en la parte de abajo de la página.',
+        en: 'Change language at the bottom of the page.',
+        pt: 'Você pode mudar o idioma na parte de baixo da página.'
+      });
+    }
+    if (/vale\s+la\s+pena\s+llamar|solo\s+estan\s+en\s+ingles|only\s+in\s+english|só\s+em\s+inglês/i.test(lower)) {
+      return t({
+        es: 'Recursos ubicados en Minnesota: vale la pena llamar aunque algunos sitios solo estén en inglés.',
+        en: 'Resources located in Minnesota — worth calling even if some sites are only in English.',
+        pt: 'Recursos localizados em Minnesota — vale a pena ligar mesmo que alguns sites estejam só em inglês.'
+      });
+    }
+
+    // Unknown note: only show if it already matches the active site language
+    var cleaned = cleanPublicText(note);
+    if (cleaned && looksCompatibleWithSiteLang(cleaned, currentLang())) return cleaned;
+    return '';
+  }
+
+  function epilepsyDisplayTitle(resource, viewingStateId) {
+    var title = String(resource.title || '').trim();
+    if (!title) return '';
+    var state = String(viewingStateId || '').toUpperCase();
+    var sharedNames = {
+      CO: 'Colorado',
+      WY: 'Wyoming',
+      KS: 'Kansas',
+      MO: 'Missouri',
+      ME: 'Maine',
+      MA: 'Massachusetts',
+      NH: 'New Hampshire',
+      RI: 'Rhode Island',
+      VT: 'Vermont'
+    };
+    var ids = resourceStateIds(resource);
+
+    if (
+      ids.length > 1 &&
+      sharedNames[state] &&
+      ids.indexOf(state) !== -1 &&
+      /colorado|wyoming|kansas|missouri|maine|massachuset|hampshire|rhode|vermont|new\s+england/i.test(
+        title
+      )
+    ) {
+      return 'Epilepsy Foundation of ' + sharedNames[state];
+    }
+
+    if (/^epilepsy foundation$/i.test(title)) return title;
+    if (/epilepsy\s+(alliance|support|society|advocacy|services)\b/i.test(title)) return title;
+    if (/valley\s+children/i.test(title)) {
+      return title.replace(/\s*\(California\)\s*/i, '').trim();
+    }
+    if (/young\s+adults/i.test(title)) {
+      return t({
+        es: 'Young Adults with Epilepsy (Jóvenes adultos con epilepsia)',
+        en: 'Young Adults with Epilepsy',
+        pt: 'Young Adults with Epilepsy (Jovens adultos com epilepsia)'
+      });
+    }
+    if (/josh\s+provides|exploring\s+epilepsy/i.test(title)) return title;
+
+    var ofMatch = title.match(/^Epilepsy\s+of\s+(.+)$/i);
+    if (ofMatch) return 'Epilepsy Foundation of ' + ofMatch[1];
+
+    var plain = title.match(/^Epilepsy\s+(.+)$/i);
+    if (plain && !/^foundation\b/i.test(plain[1])) {
+      return 'Epilepsy Foundation of ' + plain[1];
+    }
+    return title;
+  }
+
+  function displayTitleForResource(resource, viewingStateId) {
+    var prog = String(resource.program_id || '').toUpperCase();
+    if (prog === 'EPILEPSY') {
+      var epi = epilepsyDisplayTitle(resource, viewingStateId);
+      if (epi) return epi;
+    }
+
+    var rawTitle = resource.title ? String(resource.title).trim() : '';
+    if (rawTitle && !isLowQualityTitle(rawTitle)) return rawTitle;
+
+    // Autism/SNAP compact cards: prefer hostname when sheet title is a placeholder
+    if (resource.url && !isPlaceholderUrl(resource.url)) {
+      return displayHostname(resource.url);
+    }
+    if (rawTitle) return rawTitle;
+    return t({ es: 'Recurso', en: 'Resource', pt: 'Recurso' });
+  }
+
+  function renderCompactItem(resource, stateId, programId) {
     var url = resource.url;
     var typeId = String(resource.resource_type_id);
-    var host =
-      url && !isPlaceholderUrl(url)
-        ? displayHostname(url)
-        : resource.title || t({ es: 'Recurso', en: 'Resource', pt: 'Recurso' });
-    var hint = compactHintForUrl(url);
+    var prog = String(programId || resource.program_id || '').toUpperCase();
+    var isAutismFinder = prog.indexOf('AUTISM') !== -1;
+
+    var label;
+    if (isAutismFinder) {
+      var autismTitle = resource.title ? String(resource.title).trim() : '';
+      label =
+        autismTitle && !isLowQualityTitle(autismTitle)
+          ? autismTitle
+          : displayTitleForResource(resource, stateId);
+    } else {
+      label = displayTitleForResource(resource, stateId);
+    }
+
+    var hint = isAutismFinder ? '' : compactHintForUrl(url);
 
     var linkHtml = '';
     if (url && !isPlaceholderUrl(url)) {
@@ -618,7 +870,7 @@
         '<a class="resource-finder__link resource-finder__link--primary" href="' +
         escapeHtml(url) +
         '" target="_blank" rel="noopener noreferrer">' +
-        escapeHtml(host + ' →') +
+        escapeHtml(label) +
         '</a>';
     } else if (url && isPlaceholderUrl(url)) {
       linkHtml =
@@ -630,18 +882,31 @@
         }) +
         '</p>';
     } else {
-      linkHtml = '<p class="resource-finder__item-title">' + escapeHtml(host) + '</p>';
+      linkHtml = '<p class="resource-finder__item-title">' + escapeHtml(label) + '</p>';
     }
 
     var hintHtml = hint
       ? '<p class="resource-finder__item-hint">' + escapeHtml(hint) + '</p>'
       : '';
 
+    var notesHtml = '';
+    if (isAutismFinder) {
+      var rawNote =
+        pickLocalizedField(resource, 'notes') ||
+        (resource.notes ? String(resource.notes).trim() : '');
+      var noteText = localizeAutismNote(rawNote);
+      if (noteText) {
+        notesHtml =
+          '<p class="resource-finder__item-note">' + escapeHtml(noteText) + '</p>';
+      }
+    }
+
     return (
       '<article class="resource-finder__item resource-finder__item--compact" data-type="' +
       escapeHtml(typeId) +
       '">' +
       linkHtml +
+      notesHtml +
       hintHtml +
       phoneHtml(resource) +
       '</article>'
@@ -722,23 +987,78 @@
 
   function renderResourceItem(resource, data, stateId, programId, displayMode) {
     if (displayMode === 'compact') {
-      return renderCompactItem(resource);
+      return renderCompactItem(resource, stateId, programId);
     }
     return renderDetailedItem(resource, data, stateId, programId);
   }
 
-  function filterResources(data, programId, stateId, typeIds) {
-    var program = String(programId || '').toUpperCase();
+  function resourceStateIds(resource) {
+    return String(resource.state_id || '')
+      .toUpperCase()
+      .split(/[,\s]+/)
+      .map(function (x) {
+        return x.trim();
+      })
+      .filter(Boolean);
+  }
+
+  function resourceServesState(resource, stateId) {
+    var state = String(stateId || '').toUpperCase();
+    if (!state || state === 'NW') return false;
+    var parts = resourceStateIds(resource);
+    if (parts.indexOf('NW') !== -1 && parts.length === 1) return false;
+    return parts.indexOf(state) !== -1;
+  }
+
+  function resourceTypeParts(resource) {
+    return String(resource.resource_type_id || '')
+      .split(/[,\s]+/)
+      .map(function (x) {
+        return x.trim();
+      })
+      .filter(Boolean);
+  }
+
+  function resourceMatchesTypes(resource, typeIds) {
+    if (!typeIds || !typeIds.length) return true;
+    var raw = String(resource.resource_type_id || '').trim();
+    // Live Google Sheet drops multi-value type cells like "8,9" (column typed as number).
+    // Keep those resources instead of hiding them.
+    if (!raw) return true;
+    if (typeIds.indexOf(raw) !== -1) return true;
+    var parts = resourceTypeParts(resource);
+    for (var i = 0; i < parts.length; i++) {
+      if (typeIds.indexOf(parts[i]) !== -1) return true;
+    }
+    return false;
+  }
+
+  function filterResources(data, programId, stateId, typeIds, includeIds) {
+    var programs = String(programId || '')
+      .toUpperCase()
+      .split(',')
+      .map(function (x) {
+        return x.trim();
+      })
+      .filter(Boolean);
     var state = String(stateId || '').toUpperCase();
     var types = (typeIds || []).map(String);
+    var extras = (includeIds || []).map(String);
     var results = [];
+    var seen = {};
 
     for (var i = 0; i < data.resources.length; i++) {
       var r = data.resources[i];
-      if (String(r.program_id || '').toUpperCase() !== program) continue;
-      // Only exact state matches — do not pull Nationwide (NW) rows
-      if (String(r.state_id || '').toUpperCase() !== state) continue;
-      if (types.length && types.indexOf(String(r.resource_type_id)) === -1) continue;
+      var rid = String(r.resource_id || '');
+      var prog = String(r.program_id || '').toUpperCase();
+      var matchesProgram = programs.length ? programs.indexOf(prog) !== -1 : false;
+      var matchesInclude = extras.length ? extras.indexOf(rid) !== -1 : false;
+      if (!matchesProgram && !matchesInclude) continue;
+      // Match single or compound state_ids (e.g. "CO, WY"); skip Nationwide-only rows
+      if (!resourceServesState(r, state)) continue;
+      if (matchesProgram && !resourceMatchesTypes(r, types)) continue;
+      if (seen[rid]) continue;
+      seen[rid] = true;
       results.push(r);
     }
 
@@ -747,23 +1067,60 @@
     for (var t = 0; t < types.length; t++) typeOrder[types[t]] = t;
 
     results.sort(function (a, b) {
-      var aType = String(a.resource_type_id);
-      var bType = String(b.resource_type_id);
-      var aIdx = typeOrder.hasOwnProperty(aType) ? typeOrder[aType] : 99;
-      var bIdx = typeOrder.hasOwnProperty(bType) ? typeOrder[bType] : 99;
+      var aParts = resourceTypeParts(a);
+      var bParts = resourceTypeParts(b);
+      var aIdx = 99;
+      var bIdx = 99;
+      for (var ai = 0; ai < aParts.length; ai++) {
+        if (typeOrder.hasOwnProperty(aParts[ai])) {
+          aIdx = Math.min(aIdx, typeOrder[aParts[ai]]);
+        }
+      }
+      for (var bi = 0; bi < bParts.length; bi++) {
+        if (typeOrder.hasOwnProperty(bParts[bi])) {
+          bIdx = Math.min(bIdx, typeOrder[bParts[bi]]);
+        }
+      }
       if (aIdx !== bIdx) return aIdx - bIdx;
-      return aType.localeCompare(bType);
+      return String(a.title || '').localeCompare(String(b.title || ''));
     });
 
     return results;
   }
 
-  function fallbackResources(data, programId, stateId) {
-    // If preferred types are empty for this state, show any SNAP resources for that state
-    return filterResources(data, programId, stateId, []);
+  function fallbackResources(data, programId, stateId, includeIds) {
+    // If preferred types are empty for this state, show any matching resources for that state
+    return filterResources(data, programId, stateId, [], includeIds);
   }
 
-  function populateSelect(select, states) {
+  function coveredStateIds(data, programId, includeIds) {
+    var programs = String(programId || '')
+      .toUpperCase()
+      .split(',')
+      .map(function (x) {
+        return x.trim();
+      })
+      .filter(Boolean);
+    var extras = (includeIds || []).map(String);
+    var covered = {};
+
+    for (var i = 0; i < (data.resources || []).length; i++) {
+      var r = data.resources[i];
+      var rid = String(r.resource_id || '');
+      var prog = String(r.program_id || '').toUpperCase();
+      var matchesProgram = programs.length ? programs.indexOf(prog) !== -1 : false;
+      var matchesInclude = extras.length ? extras.indexOf(rid) !== -1 : false;
+      if (!matchesProgram && !matchesInclude) continue;
+      var parts = resourceStateIds(r);
+      for (var p = 0; p < parts.length; p++) {
+        if (parts[p] === 'NW') continue;
+        covered[parts[p]] = true;
+      }
+    }
+    return covered;
+  }
+
+  function populateSelect(select, states, coveredMap) {
     var placeholder = select.querySelector('option[disabled]');
     select.innerHTML = '';
     if (placeholder) {
@@ -790,10 +1147,11 @@
       var name = s.state_name || s.statename || s.name;
       if (!id || !name) continue;
       if (String(id).toUpperCase() === 'NW') continue;
-      // Skip accidental header rows if parser ever includes them
       if (String(id).toLowerCase() === 'state_id') continue;
+      var upper = String(id).toUpperCase();
+      if (coveredMap && !coveredMap[upper]) continue;
       var option = document.createElement('option');
-      option.value = String(id).toUpperCase();
+      option.value = upper;
       option.textContent = String(name);
       select.appendChild(option);
     }
@@ -859,14 +1217,19 @@
     );
   }
 
-  function renderResults(container, resources, data, stateId, programId, displayMode, page) {
+  function renderResults(container, resources, data, stateId, programId, displayMode, page, pageSize) {
     var wasOpen = container.classList.contains('is-open');
     container.classList.remove('is-open');
+    var size = pageSize || PAGE_SIZE;
+    var programKey = String(programId || '')
+      .split(',')[0]
+      .trim()
+      .toUpperCase();
     var programName = programDisplayName(data, programId);
     var programNameEsc = escapeHtml(programName);
     var mode = displayMode || 'detailed';
     var currentPage = Math.max(1, page || 1);
-    var totalPages = Math.max(1, Math.ceil(resources.length / PAGE_SIZE));
+    var totalPages = Math.max(1, Math.ceil(resources.length / size));
     if (currentPage > totalPages) currentPage = totalPages;
 
     container._rfResources = resources;
@@ -875,6 +1238,7 @@
     container._rfProgramId = programId;
     container._rfDisplayMode = mode;
     container._rfPage = currentPage;
+    container._rfPageSize = size;
 
     var body;
     if (!resources.length) {
@@ -897,16 +1261,29 @@
         '</p>';
     } else {
       var stateName = escapeHtml(stateNameFromData(data, stateId));
-      var start = (currentPage - 1) * PAGE_SIZE;
-      var pageItems = resources.slice(start, start + PAGE_SIZE);
+      var start = (currentPage - 1) * size;
+      var pageItems = resources.slice(start, start + size);
+      var shortProgramName = String(programName || '')
+        .replace(/\s+resources$/i, '')
+        .trim();
+      if (!shortProgramName) shortProgramName = programName || programKey;
+      var shortProgramEsc = escapeHtml(shortProgramName);
+      var headingHtml =
+        programKey === 'EPILEPSY'
+          ? t({
+              es: 'Recursos de Epilepsy en ' + stateName,
+              en: 'Epilepsy resources in ' + stateName,
+              pt: 'Recursos de Epilepsy em ' + stateName
+            })
+          : t({
+              es: 'Recursos de ' + shortProgramEsc + ' en ' + stateName,
+              en: shortProgramEsc + ' resources in ' + stateName,
+              pt: 'Recursos de ' + shortProgramEsc + ' em ' + stateName
+            });
       body =
         '<div class="resource-finder__panel">' +
         '<p class="resource-finder__panel-heading">' +
-        t({
-          es: 'Recursos de ' + programNameEsc + ' en ' + stateName,
-          en: programNameEsc + ' resources in ' + stateName,
-          pt: 'Recursos de ' + programNameEsc + ' em ' + stateName
-        }) +
+        headingHtml +
         '</p>' +
         pageItems
           .map(function (r) {
@@ -931,25 +1308,42 @@
 
   function initFinder(el, data) {
     var program = el.getAttribute('data-program') || 'SNAP';
-    var typesAttr = el.getAttribute('data-types') || '1,2';
+    var typesAttr = el.getAttribute('data-types');
+    if (typesAttr === null) typesAttr = '1,2';
     var displayMode = el.getAttribute('data-display') || 'detailed';
-    var preferredTypes = typesAttr.split(',').map(function (x) {
-      return x.trim();
-    }).filter(Boolean);
+    var includeAttr = el.getAttribute('data-include-ids') || '';
+    var pageSizeAttr = parseInt(el.getAttribute('data-page-size'), 10);
+    var pageSize = pageSizeAttr > 0 ? pageSizeAttr : PAGE_SIZE;
+    var onlyCovered =
+      el.getAttribute('data-only-covered-states') === 'true' ||
+      String(program).toUpperCase().indexOf('EPILEPSY') !== -1;
+    var preferredTypes = String(typesAttr)
+      .split(',')
+      .map(function (x) {
+        return x.trim();
+      })
+      .filter(Boolean);
+    var includeIds = includeAttr
+      .split(',')
+      .map(function (x) {
+        return x.trim();
+      })
+      .filter(Boolean);
 
     var select = el.querySelector('.resource-finder__select');
     var results = el.querySelector('.resource-finder__results');
     if (!select || !results) return;
 
-    populateSelect(select, data.states || []);
+    var covered = onlyCovered ? coveredStateIds(data, program, includeIds) : null;
+    populateSelect(select, data.states || [], covered);
 
     function showForState(stateId, scroll, page) {
       if (!stateId) return;
-      var matched = filterResources(data, program, stateId, preferredTypes);
+      var matched = filterResources(data, program, stateId, preferredTypes, includeIds);
       if (!matched.length) {
-        matched = fallbackResources(data, program, stateId);
+        matched = fallbackResources(data, program, stateId, includeIds);
       }
-      renderResults(results, matched, data, stateId, program, displayMode, page || 1);
+      renderResults(results, matched, data, stateId, program, displayMode, page || 1, pageSize);
       if (scroll) {
         results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       }
@@ -971,7 +1365,8 @@
         results._rfStateId || select.value,
         results._rfProgramId || program,
         results._rfDisplayMode || displayMode,
-        nextPage
+        nextPage,
+        results._rfPageSize || pageSize
       );
       results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     });

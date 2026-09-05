@@ -156,7 +156,8 @@ small,
   display: flex;
   align-items: center;
   gap: 10px;
-  flex-shrink: 1;
+  /* Never let nav links crush the logo/name — JS switches to hamburger instead */
+  flex-shrink: 0;
   min-width: 0;
 }
 
@@ -175,15 +176,14 @@ small,
   color: #fff;
   letter-spacing: 0.02em;
   white-space: nowrap;
-  flex-shrink: 1;
-  min-width: 0;
+  flex-shrink: 0;
 }
 
 .navbar__links {
   display: flex;
   align-items: center;
   gap: 2px;
-  flex: 0 1 auto;
+  flex: 0 0 auto;
   min-width: 0;
   justify-content: flex-start;
   /* Share leftover space with .navbar__right so titles sit between brand and lang toggle */
@@ -639,6 +639,11 @@ html[lang="en"] .lang-hide-en {
   width: max-content !important;
 }
 
+.navbar.navbar--measuring .navbar__brand,
+.navbar.navbar--measuring .navbar__site-name {
+  flex-shrink: 0 !important;
+}
+
 .navbar.navbar--measuring .hamburger {
   display: none !important;
 }
@@ -647,8 +652,9 @@ html[lang="en"] .lang-hide-en {
   margin-left: auto;
 }
 
-.navbar.navbar--brand-compact .navbar__site-name {
-  font-size: 0.95rem;
+/* Slightly smaller brand name to buy extra space before hamburger */
+.navbar.navbar--brand-sm .navbar__site-name {
+  font-size: 1.05rem;
   letter-spacing: 0;
 }
 
@@ -660,10 +666,16 @@ html[lang="en"] .lang-hide-en {
   display: flex;
 }
 
+.navbar.navbar--compact .navbar__brand {
+  flex-shrink: 1;
+}
+
 .navbar.navbar--compact .navbar__site-name {
   /* Same size that looked good at ~380px */
   font-size: 0.95rem;
   letter-spacing: 0;
+  flex-shrink: 1;
+  min-width: 0;
 }
 
 .navbar.navbar--compact .navbar__right {
@@ -671,34 +683,52 @@ html[lang="en"] .lang-hide-en {
   flex-shrink: 0;
 }
 
-/* Soft fallback before JS runs / if JS is unavailable */
-@media (max-width: 1200px) {
+/* When JS adds navbar--wrap, single-line labels may wrap at word boundaries (max 2 lines).
+   baseline alignment keeps every item's first line of text on the same horizontal line
+   as the SaludSimple name and the ES/EN/PT toggle text. */
+.navbar.navbar--wrap .navbar__links {
+  flex: 0 1 auto;
+  align-items: baseline;
+  /* Shift down so the first-line baseline aligns with the centered logo/toggle */
+  transform: translateY(calc((1.2em + 2px) / 2));
+}
+
+.navbar.navbar--wrap .navbar__item {
+  flex-shrink: 1;
+}
+
+/* Disable the multiline translateY shift — baseline alignment handles first-line alignment */
+.navbar.navbar--wrap .navbar__item:has(> .navbar__link--multiline .navbar__link-line:nth-child(2):not(:empty)) {
+  transform: none;
+}
+
+.navbar.navbar--wrap .navbar__link:not(.navbar__link--multiline) {
+  white-space: normal;
+  text-align: left;
+  line-height: 1.2;
+  max-width: 9rem;
+  align-items: flex-start;   /* keep chevron at first-line level */
+}
+
+.navbar.navbar--wrap .navbar__link:not(.navbar__link--multiline) .navbar__link-chevron {
+  margin-top: 0.25em;        /* nudge to sit on the first-line baseline */
+}
+
+/*
+  Phone layout only (not the desktop fit decision). Desktop / mid widths are
+  controlled by JS measuring real content width via .navbar--compact.
+*/
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 60px;
+  }
+
   .navbar__links {
     display: none;
   }
 
-  .hamburger {
-    display: flex;
-  }
-
-  .navbar__right {
-    margin-left: auto;
-  }
-}
-
-@media (min-width: 1201px) {
-  .navbar:not(.navbar--compact):not(.navbar--measuring) .navbar__links {
-    display: flex;
-  }
-
-  .navbar:not(.navbar--compact):not(.navbar--measuring) .hamburger {
-    display: none;
-  }
-}
-
-@media (max-width: 768px) {
-  :root {
-    --nav-height: 60px;
+  .navbar__brand {
+    flex-shrink: 1;
   }
 
   .navbar__inner {
@@ -711,6 +741,8 @@ html[lang="en"] .lang-hide-en {
     /* Preferred phone size — matches ~380px */
     font-size: 0.95rem;
     letter-spacing: 0;
+    flex-shrink: 1;
+    min-width: 0;
   }
 
   .navbar__right {
@@ -773,7 +805,6 @@ html[lang="en"] .lang-hide-en {
   }
 
   .navbar__site-name,
-  .navbar.navbar--brand-compact .navbar__site-name,
   .navbar.navbar--compact .navbar__site-name {
     font-size: clamp(0.82rem, 4.2vw, 0.95rem);
     letter-spacing: 0;
