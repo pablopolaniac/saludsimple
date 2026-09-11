@@ -118,8 +118,27 @@
     }
   }
 
+  function initPreBuiltFaqItems() {
+    var items = document.querySelectorAll('.faq-item');
+    for (var i = 0; i < items.length; i++) {
+      (function (box) {
+        var btn = box.querySelector('.faq-item__question');
+        var answer = box.querySelector('.faq-item__answer');
+        if (!btn || !answer || btn.dataset.faqBound) return;
+        btn.dataset.faqBound = '1';
+        btn.addEventListener('click', function () {
+          var open = btn.getAttribute('aria-expanded') === 'true';
+          btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+          answer.hidden = open;
+          box.classList.toggle('is-open', !open);
+        });
+      })(items[i]);
+    }
+  }
+
   function init() {
     initFaq();
+    initPreBuiltFaqItems();
     initCollapsibleSections();
     initInfoReveals();
   }

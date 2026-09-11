@@ -580,12 +580,28 @@ window.__SITE_SEARCH_INDEX__ = [
     categoryEs: 'Diagnóstico',
     categoryEn: 'Diagnosis',
     categoryPt: 'Diagnóstico',
-    summaryEs: 'Recursos para autismo, TDAH, diabetes, parálisis cerebral, epilepsia e IEP/504.',
-    summaryEn: 'Resources for autism, ADHD, diabetes, cerebral palsy, epilepsy, and IEP/504.',
-    summaryPt: 'Recursos para autismo, TDAH, diabetes, paralisia cerebral, epilepsia e IEP/504.',
+    summaryEs: 'Recursos para asma, autismo, TDAH, diabetes, parálisis cerebral, epilepsia e IEP/504.',
+    summaryEn: 'Resources for asthma, autism, ADHD, diabetes, cerebral palsy, epilepsy, and IEP/504.',
+    summaryPt: 'Recursos para asma, autismo, TDAH, diabetes, paralisia cerebral, epilepsia e IEP/504.',
     keywords: [
       'diagnóstico', 'discapacidad', 'disability', 'condición',
       'recursos por enfermedad'
+    ]
+  },
+  {
+    url: 'recursos-diagnostico/asma.html',
+    titleEs: 'Asma',
+    titleEn: 'Asthma',
+    titlePt: 'Asma',
+    categoryEs: 'Diagnóstico',
+    categoryEn: 'Diagnosis',
+    categoryPt: 'Diagnóstico',
+    summaryEs: 'Información sobre el asma, cómo controlarlo, recursos por estado y ayuda para pagar medicamentos.',
+    summaryEn: 'Information about asthma, how to manage it, state resources, and help paying for medications.',
+    summaryPt: 'Informações sobre a asma, como controlá-la, recursos por estado e ajuda para pagar medicamentos.',
+    keywords: [
+      'asma', 'asthma', 'inhalador', 'inhaler', 'respirar', 'breathing',
+      'pulmones', 'lungs', 'alergia', 'allergy', 'medicamento', 'medication'
     ]
   },
   {

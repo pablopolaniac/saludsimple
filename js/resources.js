@@ -329,6 +329,7 @@
     var id = String(programId || '').toUpperCase();
     var friendly = {
       AUTISM: { es: 'Autismo', en: 'Autism', pt: 'Autismo' },
+      ASTHMA: { es: 'Asma', en: 'Asthma', pt: 'Asma' },
       SNAP: { es: 'SNAP', en: 'SNAP', pt: 'SNAP' },
       WIC: { es: 'WIC', en: 'WIC', pt: 'WIC' },
       MEDICAID: { es: 'Medicaid', en: 'Medicaid', pt: 'Medicaid' }
@@ -352,6 +353,7 @@
   function groupHeading(typeId, programName) {
     var id = String(typeId);
     var prog = programName || '';
+    if (id === '7') return '';
     if (id === '1') {
       return t({
         es: 'Solicitar' + (prog ? ' ' + prog : ''),
@@ -754,11 +756,32 @@
         pt: 'Você pode mudar o idioma na parte inferior direita.'
       });
     }
+    if (/bottom\s+left|inferior\s+izquierd|canto\s+inferior\s+esquerdo/i.test(lower)) {
+      return t({
+        es: 'Puede cambiar el idioma en la parte inferior izquierda.',
+        en: 'Change language at the bottom left.',
+        pt: 'Você pode mudar o idioma na parte inferior esquerda.'
+      });
+    }
+    if (/at\s+the\s+top\b(?!.*right)(?!.*left)|parte\s+de\s+arriba|no\s+topo\s+da/i.test(lower)) {
+      return t({
+        es: 'Puede cambiar el idioma en la parte de arriba de la página.',
+        en: 'Change language at the top of the page.',
+        pt: 'Você pode mudar o idioma na parte de cima da página.'
+      });
+    }
     if (/at\s+the\s+bottom|parte\s+abajo|parte\s+inferior|na\s+parte\s+de\s+baixo|no\s+rodapé/i.test(lower)) {
       return t({
         es: 'Puede cambiar el idioma en la parte de abajo de la página.',
         en: 'Change language at the bottom of the page.',
         pt: 'Você pode mudar o idioma na parte de baixo da página.'
+      });
+    }
+    if (/select\s+language|click.*languages/i.test(lower) && !/upper|top|bottom|left|right/i.test(lower)) {
+      return t({
+        es: 'Puede cambiar el idioma haciendo clic en la opción de idioma.',
+        en: 'Change language by clicking the language option.',
+        pt: 'Você pode mudar o idioma clicando na opção de idioma.'
       });
     }
     if (/vale\s+la\s+pena\s+llamar|solo\s+estan\s+en\s+ingles|only\s+in\s+english|só\s+em\s+inglês/i.test(lower)) {
@@ -850,19 +873,21 @@
     var typeId = String(resource.resource_type_id);
     var prog = String(programId || resource.program_id || '').toUpperCase();
     var isAutismFinder = prog.indexOf('AUTISM') !== -1;
+    var isAsthmaFinder = prog.indexOf('ASTHMA') !== -1;
+    var showTitleAsLink = isAutismFinder || isAsthmaFinder;
 
     var label;
-    if (isAutismFinder) {
-      var autismTitle = resource.title ? String(resource.title).trim() : '';
+    if (showTitleAsLink) {
+      var rawTitle = resource.title ? String(resource.title).trim() : '';
       label =
-        autismTitle && !isLowQualityTitle(autismTitle)
-          ? autismTitle
+        rawTitle && !isLowQualityTitle(rawTitle)
+          ? rawTitle
           : displayTitleForResource(resource, stateId);
     } else {
       label = displayTitleForResource(resource, stateId);
     }
 
-    var hint = isAutismFinder ? '' : compactHintForUrl(url);
+    var hint = showTitleAsLink ? '' : compactHintForUrl(url);
 
     var linkHtml = '';
     if (url && !isPlaceholderUrl(url)) {
@@ -890,14 +915,18 @@
       : '';
 
     var notesHtml = '';
-    if (isAutismFinder) {
-      var rawNote =
-        pickLocalizedField(resource, 'notes') ||
-        (resource.notes ? String(resource.notes).trim() : '');
-      var noteText = localizeAutismNote(rawNote);
+    if (showTitleAsLink) {
+      var localizedNote = pickLocalizedField(resource, 'notes');
+      var noteText;
+      if (localizedNote) {
+        noteText = localizedNote;
+      } else {
+        var rawNote = resource.notes ? String(resource.notes).trim() : '';
+        noteText = localizeAutismNote(rawNote);
+      }
       if (noteText) {
         notesHtml =
-          '<p class="resource-finder__item-note">' + escapeHtml(noteText) + '</p>';
+          '<p class="resource-finder__item-note lang-hide-en">' + escapeHtml(noteText) + '</p>';
       }
     }
 

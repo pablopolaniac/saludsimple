@@ -98,7 +98,7 @@
 
     <!-- Encuentre dónde aplicar en su estado -->
     <section class="content-page__section content-page__collapse">
-      <h2 class="content-page__section-title content-page__collapse-heading">
+      <h2 class="content-page__section-title content-page__collapse-heading" style="background: linear-gradient(90deg, rgba(46,139,122,0.10) 0%, rgba(46,139,122,0.04) 100%); border-radius: 10px; padding: 12px 16px; border-bottom: 3px solid var(--bosque);">
         <button type="button" class="content-page__collapse-trigger" aria-expanded="false" aria-controls="snap-encontrar-estado-panel" id="snap-encontrar-estado-trigger">
           <span data-es="Encuentre dónde aplicar en su estado" data-en="Find Where to Apply in Your State" data-pt="Descubra onde se inscrever em seu estado">Encuentre dónde aplicar en su estado</span>
           <span class="content-page__collapse-chevron" aria-hidden="true"></span>
@@ -165,6 +165,13 @@
           <option value="WY">Wyoming</option>
         </select>
         <div class="resource-finder__results" hidden></div>
+      </div>
+
+      <div id="mo-dhss-card-snap" style="display:none; background: #fff; border: 1px solid rgba(46,139,122,0.12); border-radius: 12px; padding: 20px 24px; margin-top: 16px;">
+        <h3 style="font-family: var(--font-primary); font-weight: 700; color: var(--bosque); margin-bottom: 8px;">Missouri Department of Health and Senior Services</h3>
+        <p><span data-es="Llame para asistencia" data-en="Call for assistance" data-pt="Ligue para assistência">Llame para asistencia</span> <a href="tel:18008355465" style="color: var(--bosque); font-weight: 700;">800-835-5465</a></p>
+        <p class="content-page__note lang-hide-en" style="margin-top: 10px;" data-es="Puede cambiar el idioma en la parte de arriba de la página." data-pt="Você pode mudar o idioma na parte de cima da página.">Puede cambiar el idioma en la parte de arriba de la página.</p>
+        <p style="margin-top: 12px;"><a class="mo-dhss-link" href="https://health.mo.gov/families/healthy-families/tel-link" target="_blank" rel="noopener noreferrer" style="color: var(--comunidad); font-weight: 700; text-decoration: none;" data-es="Missouri Tel Link" data-en="Missouri Tel Link" data-pt="Missouri Tel Link">Missouri Tel Link</a></p>
       </div>
       </div>
     </section>
@@ -250,7 +257,27 @@
   <div id="site-footer"></div>
 
   <script src="../js/includes.js"></script>
-  <script src="../js/resources-data.js"></script>
-  <script src="../js/resources.js"></script>
+  <script src="../js/resources-data.js?v=3"></script>
+  <script src="../js/resources.js?v=3"></script>
+  <script>
+  (function () {
+    var card = document.getElementById('mo-dhss-card-snap');
+    var select = document.getElementById('snap-state-select');
+    if (!card || !select) return;
+    var link = card.querySelector('.mo-dhss-link');
+    if (link) {
+      var res = (window.SALUD_RESOURCES || {}).resources || [];
+      for (var i = 0; i < res.length; i++) {
+        if (String(res[i].resource_id) === '343' && res[i].url) {
+          link.href = res[i].url;
+          break;
+        }
+      }
+    }
+    select.addEventListener('change', function () {
+      card.style.display = select.value === 'MO' ? '' : 'none';
+    });
+  })();
+  </script>
 </body>
 </html>
