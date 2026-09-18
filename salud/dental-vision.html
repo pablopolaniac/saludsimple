@@ -41,8 +41,14 @@
         <p data-es="Algunos servicios de salud, como la atención dental y los exámenes de la vista no siempre están cubiertos de la misma manera que la atención médica general. Sin embargo, existen programas y organizaciones que ofrecen estos servicios de forma gratuita o a bajo costo." data-en="Some health services, such as dental care and eye exams, are not always covered the same way as general medical care. However, there are programs and organizations that offer these services for free or at low cost." data-pt="Alguns serviços de saúde, como o atendimento odontológico e os exames de visão, nem sempre são cobertos da mesma forma que o atendimento médico geral. No entanto, existem programas e organizações que oferecem esses serviços de forma gratuita ou a baixo custo.">Algunos servicios de salud, como la atención dental y los exámenes de la vista no siempre están cubiertos de la misma manera que la atención médica general. Sin embargo, existen programas y organizaciones que ofrecen estos servicios de forma gratuita o a bajo costo.</p>
       </section>
 
-      <section class="content-page__section">
-        <h2 class="content-page__section-title" data-es="Atención dental" data-en="Dental Care" data-pt="Atendimento odontológico">Atención dental</h2>
+      <section class="content-page__section content-page__collapse">
+        <h2 class="content-page__section-title content-page__collapse-heading">
+          <button type="button" class="content-page__collapse-trigger" aria-expanded="false" aria-controls="dental-panel" id="dental-trigger">
+            <span data-es="Atención dental" data-en="Dental Care" data-pt="Atendimento odontológico">Atención dental</span>
+            <span class="content-page__collapse-chevron" aria-hidden="true"></span>
+          </button>
+        </h2>
+        <div class="content-page__collapse-panel" id="dental-panel" role="region" aria-labelledby="dental-trigger" hidden>
 
         <div style="background: #fff; border: 1px solid rgba(46,139,122,0.12); border-radius: 12px; padding: 20px 24px; margin-bottom: 16px;">
           <h3 style="font-family: var(--font-primary); font-weight: 700; color: var(--bosque); margin-bottom: 8px;" data-es="¿Dónde puede recibir atención dental?" data-en="Where can you receive dental care?" data-pt="Onde você pode receber atendimento odontológico?">¿Dónde puede recibir atención dental?</h3>
@@ -55,28 +61,40 @@
           </ul>
         </div>
 
-        <h3 style="font-family: var(--font-primary); font-weight: 700; font-size: 1.05rem; color: var(--bosque); margin-top: 24px; margin-bottom: 8px;" data-es="¿Qué servicios pueden ofrecer?" data-en="What services may they offer?" data-pt="Que serviços podem oferecer?">¿Qué servicios pueden ofrecer?</h3>
-        <p data-es="Los servicios disponibles dependen del lugar, pero pueden incluir:" data-en="Available services depend on the location, but may include:" data-pt="Os serviços disponíveis dependem do local, mas podem incluir:">Los servicios disponibles dependen del lugar, pero pueden incluir:</p>
-        <ul>
-          <li data-es="Limpiezas dentales" data-en="Dental cleanings" data-pt="Limpezas dentárias">Limpiezas dentales</li>
-          <li data-es="Exámenes dentales" data-en="Dental exams" data-pt="Exames odontológicos">Exámenes dentales</li>
-          <li data-es="Radiografías" data-en="X-rays" data-pt="Radiografias">Radiografías</li>
-          <li data-es="Tratamiento de caries" data-en="Cavity treatment" data-pt="Tratamento de cáries">Tratamiento de caries</li>
-          <li data-es="Extracciones" data-en="Extractions" data-pt="Extrações">Extracciones</li>
-          <li data-es="Atención para emergencias dentales" data-en="Emergency dental care" data-pt="Atendimento para emergências odontológicas">Atención para emergencias dentales</li>
-        </ul>
+        <div style="background: #fff; border: 1px solid rgba(46,139,122,0.12); border-radius: 12px; padding: 20px 24px; margin-bottom: 16px;">
+          <h3 style="font-family: var(--font-primary); font-weight: 700; color: var(--bosque); margin-bottom: 8px;" data-es="¿Qué servicios pueden ofrecer?" data-en="What services may they offer?" data-pt="Que serviços podem oferecer?">¿Qué servicios pueden ofrecer?</h3>
+          <p data-es="Los servicios disponibles dependen del lugar, pero pueden incluir:" data-en="Available services depend on the location, but may include:" data-pt="Os serviços disponíveis dependem do local, mas podem incluir:">Los servicios disponibles dependen del lugar, pero pueden incluir:</p>
+          <ul style="margin-top: 8px; padding-left: 3rem;">
+            <li data-es="Limpiezas dentales" data-en="Dental cleanings" data-pt="Limpezas dentárias">Limpiezas dentales</li>
+            <li data-es="Exámenes dentales" data-en="Dental exams" data-pt="Exames odontológicos">Exámenes dentales</li>
+            <li data-es="Radiografías" data-en="X-rays" data-pt="Radiografias">Radiografías</li>
+            <li data-es="Tratamiento de caries" data-en="Cavity treatment" data-pt="Tratamento de cáries">Tratamiento de caries</li>
+            <li data-es="Extracciones" data-en="Extractions" data-pt="Extrações">Extracciones</li>
+            <li data-es="Atención para emergencias dentales" data-en="Emergency dental care" data-pt="Atendimento para emergências odontológicas">Atención para emergencias dentales</li>
+          </ul>
+        </div>
 
-        <h3 style="font-family: var(--font-primary); font-weight: 700; font-size: 1.05rem; color: var(--bosque); margin-top: 24px; margin-bottom: 8px;" data-es="Antes de acudir" data-en="Before visiting" data-pt="Antes de ir">Antes de acudir</h3>
-        <p data-es="Pregunte:" data-en="Ask:" data-pt="Pergunte:">Pregunte:</p>
-        <ul>
-          <li data-es="¿Atienden a personas sin seguro dental?" data-en="Do you see patients without dental insurance?" data-pt="Atendem pessoas sem plano odontológico?">¿Atienden a personas sin seguro dental?</li>
-          <li data-es="¿Ofrecen tarifas reducidas según los ingresos?" data-en="Do you offer reduced fees based on income?" data-pt="Oferecem tarifas reduzidas conforme a renda?">¿Ofrecen tarifas reducidas según los ingresos?</li>
-          <li data-es="¿Qué servicios están disponibles?" data-en="What services are available?" data-pt="Que serviços estão disponíveis?">¿Qué servicios están disponibles?</li>
-        </ul>
+        <div style="background: #fff; border: 1px solid rgba(46,139,122,0.12); border-radius: 12px; padding: 20px 24px; margin-bottom: 16px;">
+          <h3 style="font-family: var(--font-primary); font-weight: 700; color: var(--bosque); margin-bottom: 8px;" data-es="Antes de acudir" data-en="Before visiting" data-pt="Antes de ir">Antes de acudir</h3>
+          <p data-es="Pregunte:" data-en="Ask:" data-pt="Pergunte:">Pregunte:</p>
+          <ul style="margin-top: 8px; padding-left: 3rem;">
+            <li data-es="¿Atienden a personas sin seguro dental?" data-en="Do you see patients without dental insurance?" data-pt="Atendem pessoas sem plano odontológico?">¿Atienden a personas sin seguro dental?</li>
+            <li data-es="¿Ofrecen tarifas reducidas según los ingresos?" data-en="Do you offer reduced fees based on income?" data-pt="Oferecem tarifas reduzidas conforme a renda?">¿Ofrecen tarifas reducidas según los ingresos?</li>
+            <li data-es="¿Qué servicios están disponibles?" data-en="What services are available?" data-pt="Que serviços estão disponíveis?">¿Qué servicios están disponibles?</li>
+          </ul>
+        </div>
+
+        </div>
       </section>
 
-      <section class="content-page__section">
-        <h2 class="content-page__section-title" data-es="Atención de la vista" data-en="Vision Care" data-pt="Atendimento de visão">Atención de la vista</h2>
+      <section class="content-page__section content-page__collapse">
+        <h2 class="content-page__section-title content-page__collapse-heading">
+          <button type="button" class="content-page__collapse-trigger" aria-expanded="false" aria-controls="vision-panel" id="vision-trigger">
+            <span data-es="Atención de la vista" data-en="Vision Care" data-pt="Atendimento de visão">Atención de la vista</span>
+            <span class="content-page__collapse-chevron" aria-hidden="true"></span>
+          </button>
+        </h2>
+        <div class="content-page__collapse-panel" id="vision-panel" role="region" aria-labelledby="vision-trigger" hidden>
 
         <div style="background: #fff; border: 1px solid rgba(46,139,122,0.12); border-radius: 12px; padding: 20px 24px; margin-bottom: 16px;">
           <h3 style="font-family: var(--font-primary); font-weight: 700; color: var(--bosque); margin-bottom: 8px;" data-es="¿Dónde puede recibir servicios de la vista?" data-en="Where can you receive vision services?" data-pt="Onde você pode receber serviços de visão?">¿Dónde puede recibir servicios de la vista?</h3>
@@ -89,23 +107,29 @@
           </ul>
         </div>
 
-        <h3 style="font-family: var(--font-primary); font-weight: 700; font-size: 1.05rem; color: var(--bosque); margin-top: 24px; margin-bottom: 8px;" data-es="¿Qué servicios pueden ofrecer?" data-en="What services may they offer?" data-pt="Que serviços podem oferecer?">¿Qué servicios pueden ofrecer?</h3>
-        <p data-es="Pueden incluir:" data-en="They may include:" data-pt="Podem incluir:">Pueden incluir:</p>
-        <ul>
-          <li data-es="Exámenes de la vista" data-en="Eye exams" data-pt="Exames de visão">Exámenes de la vista</li>
-          <li data-es="Evaluaciones para lentes" data-en="Eyeglass evaluations" data-pt="Avaliações para óculos">Evaluaciones para lentes</li>
-          <li data-es="Lentes a bajo costo o gratuitos, si están disponibles" data-en="Low-cost or free eyeglasses, if available" data-pt="Óculos a baixo custo ou gratuitos, se disponíveis">Lentes a bajo costo o gratuitos, si están disponibles</li>
-          <li data-es="Referencias a otros servicios de salud" data-en="Referrals to other health services" data-pt="Encaminhamentos para outros serviços de saúde">Referencias a otros servicios de salud</li>
-        </ul>
+        <div style="background: #fff; border: 1px solid rgba(46,139,122,0.12); border-radius: 12px; padding: 20px 24px; margin-bottom: 16px;">
+          <h3 style="font-family: var(--font-primary); font-weight: 700; color: var(--bosque); margin-bottom: 8px;" data-es="¿Qué servicios pueden ofrecer?" data-en="What services may they offer?" data-pt="Que serviços podem oferecer?">¿Qué servicios pueden ofrecer?</h3>
+          <p data-es="Pueden incluir:" data-en="They may include:" data-pt="Podem incluir:">Pueden incluir:</p>
+          <ul style="margin-top: 8px; padding-left: 3rem;">
+            <li data-es="Exámenes de la vista" data-en="Eye exams" data-pt="Exames de visão">Exámenes de la vista</li>
+            <li data-es="Evaluaciones para lentes" data-en="Eyeglass evaluations" data-pt="Avaliações para óculos">Evaluaciones para lentes</li>
+            <li data-es="Lentes a bajo costo o gratuitos, si están disponibles" data-en="Low-cost or free eyeglasses, if available" data-pt="Óculos a baixo custo ou gratuitos, se disponíveis">Lentes a bajo costo o gratuitos, si están disponibles</li>
+            <li data-es="Referencias a otros servicios de salud" data-en="Referrals to other health services" data-pt="Encaminhamentos para outros serviços de saúde">Referencias a otros servicios de salud</li>
+          </ul>
+        </div>
 
-        <h3 style="font-family: var(--font-primary); font-weight: 700; font-size: 1.05rem; color: var(--bosque); margin-top: 24px; margin-bottom: 8px;" data-es="Antes de acudir" data-en="Before visiting" data-pt="Antes de ir">Antes de acudir</h3>
-        <p data-es="Pregunte:" data-en="Ask:" data-pt="Pergunte:">Pregunte:</p>
-        <ul>
-          <li data-es="¿Ofrecen exámenes de la vista sin seguro?" data-en="Do you offer eye exams without insurance?" data-pt="Oferecem exames de visão sem plano de saúde?">¿Ofrecen exámenes de la vista sin seguro?</li>
-          <li data-es="¿Ayudan con el costo de los lentes?" data-en="Do you help with the cost of eyeglasses?" data-pt="Ajudam com o custo dos óculos?">¿Ayudan con el costo de los lentes?</li>
-          <li data-es="¿Qué documentos necesitan?" data-en="What documents do you need?" data-pt="Quais documentos precisam?">¿Qué documentos necesitan?</li>
-          <li data-es="¿Hay requisitos de ingresos?" data-en="Are there income requirements?" data-pt="Há requisitos de renda?">¿Hay requisitos de ingresos?</li>
-        </ul>
+        <div style="background: #fff; border: 1px solid rgba(46,139,122,0.12); border-radius: 12px; padding: 20px 24px; margin-bottom: 16px;">
+          <h3 style="font-family: var(--font-primary); font-weight: 700; color: var(--bosque); margin-bottom: 8px;" data-es="Antes de acudir" data-en="Before visiting" data-pt="Antes de ir">Antes de acudir</h3>
+          <p data-es="Pregunte:" data-en="Ask:" data-pt="Pergunte:">Pregunte:</p>
+          <ul style="margin-top: 8px; padding-left: 3rem;">
+            <li data-es="¿Ofrecen exámenes de la vista sin seguro?" data-en="Do you offer eye exams without insurance?" data-pt="Oferecem exames de visão sem plano de saúde?">¿Ofrecen exámenes de la vista sin seguro?</li>
+            <li data-es="¿Ayudan con el costo de los lentes?" data-en="Do you help with the cost of eyeglasses?" data-pt="Ajudam com o custo dos óculos?">¿Ayudan con el costo de los lentes?</li>
+            <li data-es="¿Qué documentos necesitan?" data-en="What documents do you need?" data-pt="Quais documentos precisam?">¿Qué documentos necesitan?</li>
+            <li data-es="¿Hay requisitos de ingresos?" data-en="Are there income requirements?" data-pt="Há requisitos de renda?">¿Hay requisitos de ingresos?</li>
+          </ul>
+        </div>
+
+        </div>
       </section>
 
 
@@ -121,6 +145,18 @@
           <p style="font-family: var(--font-primary); font-weight: 700; font-size: 1rem; color: var(--bosque); margin-bottom: 8px;" data-es="Clínicas gratuitas o de caridad" data-en="Free or charity clinics" data-pt="Clínicas gratuitas ou de caridade">Clínicas gratuitas o de caridad</p>
           <p><a href="https://nafcclinics.org/find-clinic/" target="_blank" rel="noopener noreferrer" class="link-cta" style="color: var(--comunidad); font-weight: 700; text-decoration: none;" data-es="Buscar clínicas gratuitas o de caridad cerca de usted" data-en="Find free or charity clinics near you" data-pt="Buscar clínicas gratuitas ou de caridade perto de você">Buscar clínicas gratuitas o de caridad cerca de usted</a></p>
         </div>
+
+        <div style="background: #fff; border: 1px solid rgba(46,139,122,0.12); border-radius: 12px; padding: 18px 24px; margin-bottom: 12px;">
+          <p style="font-family: var(--font-primary); font-weight: 700; font-size: 1rem; color: var(--bosque); margin-bottom: 8px;" data-es="Buscar servicios dentales por estado" data-en="Search dental services by state" data-pt="Buscar serviços odontológicos por estado">Buscar servicios dentales por estado</p>
+          <p style="margin-bottom: 12px;" data-es="Seleccione su estado para ver recursos dentales disponibles en su área." data-en="Select your state to see dental resources available in your area." data-pt="Selecione seu estado para ver recursos odontológicos disponíveis na sua área.">Seleccione su estado para ver recursos dentales disponibles en su área.</p>
+          <div class="resource-finder" data-program="DENTAL" data-types="" data-display="compact" data-only-covered-states="true">
+            <label class="resource-finder__label" for="dental-state-select" data-es="Seleccione su estado" data-en="Select your state" data-pt="Selecione seu estado">Seleccione su estado</label>
+            <select id="dental-state-select" class="resource-finder__select" aria-label="Seleccione su estado">
+              <option disabled selected data-es="Seleccione su estado" data-en="Select your state" data-pt="Selecione seu estado">Seleccione su estado</option>
+            </select>
+            <div class="resource-finder__results" hidden></div>
+          </div>
+        </div>
       </section>
 
     </div>
@@ -128,6 +164,8 @@
 
   <div id="site-footer"></div>
 
-  <script src="../js/includes.js"></script>
+  <script src="../js/resources-data.js?v=2"></script>
+  <script src="../js/resources.js?v=2"></script>
+  <script src="../js/includes.js?v=2"></script>
 </body>
 </html>

@@ -124,7 +124,7 @@
       });
     })
     .then(function () {
-      return loadScript(base + '/js/faq.js');
+      return loadScript(base + '/js/faq.js?v=2');
     })
     .then(function () {
       return loadScript(base + '/js/search-data.js');

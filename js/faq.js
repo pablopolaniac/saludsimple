@@ -43,6 +43,7 @@
 
     btn.appendChild(qText);
     btn.appendChild(chevron);
+    btn.dataset.faqBound = '1';
 
     var answer = document.createElement('div');
     answer.className = 'faq-item__answer';
