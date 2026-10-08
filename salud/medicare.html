@@ -48,8 +48,14 @@
       <p data-es="La elegibilidad puede depender de factores como su historial de trabajo, los beneficios del Seguro Social y otros requisitos del programa." data-en="Eligibility may depend on factors such as your work history, Social Security benefits, and other program requirements." data-pt="A elegibilidade pode depender de fatores como seu histórico de trabalho, os benefícios do Social Security e outros requisitos do programa.">La elegibilidad puede depender de factores como su historial de trabajo, los beneficios del Seguro Social y otros requisitos del programa.</p>
     </section>
 
-    <section class="content-page__section">
-      <h2 class="content-page__section-title" data-es="¿Cuáles son las partes de Medicare?" data-en="What Are the Parts of Medicare?" data-pt="Quais são as partes do Medicare?">¿Cuáles son las partes de Medicare?</h2>
+    <section class="content-page__section content-page__collapse">
+      <h2 class="content-page__section-title content-page__collapse-heading">
+        <button type="button" class="content-page__collapse-trigger" aria-expanded="false" aria-controls="medicare-partes-panel" id="medicare-partes-trigger">
+          <span data-es="¿Cuáles son las partes de Medicare?" data-en="What Are the Parts of Medicare?" data-pt="Quais são as partes do Medicare?">¿Cuáles son las partes de Medicare?</span>
+          <span class="content-page__collapse-chevron" aria-hidden="true"></span>
+        </button>
+      </h2>
+      <div class="content-page__collapse-panel" id="medicare-partes-panel" role="region" aria-labelledby="medicare-partes-trigger" hidden>
       <p data-es="Medicare tiene diferentes partes que cubren distintos servicios médicos." data-en="Medicare has different parts that cover different medical services." data-pt="O Medicare tem diferentes partes que cobrem distintos serviços médicos.">Medicare tiene diferentes partes que cubren distintos servicios médicos.</p>
 
       <h3 style="font-family: var(--font-primary); font-weight: 700; font-size: 1.05rem; color: var(--bosque); margin-top: 24px; margin-bottom: 8px;" data-es="Medicare Parte A: Seguro hospitalario" data-en="Medicare Part A: Hospital Insurance" data-pt="Medicare Parte A: Seguro hospitalar">Medicare Parte A: Seguro hospitalario</h3>
@@ -84,10 +90,17 @@
         <li data-es="Beneficios adicionales que pueden variar según el plan" data-en="Additional benefits that may vary by plan" data-pt="Benefícios adicionais que podem variar conforme o plano">Beneficios adicionales que pueden variar según el plan</li>
       </ul>
       <p data-es="Cada plan tiene sus propias reglas, costos y red de proveedores." data-en="Each plan has its own rules, costs, and provider network." data-pt="Cada plano tem suas próprias regras, custos e rede de prestadores.">Cada plan tiene sus propias reglas, costos y red de proveedores.</p>
+      </div>
     </section>
 
-    <section class="content-page__section">
-      <h2 class="content-page__section-title" data-es="¿Qué no cubre Medicare?" data-en="What Doesn't Medicare Cover?" data-pt="O que o Medicare não cobre?">¿Qué no cubre Medicare?</h2>
+    <section class="content-page__section content-page__collapse">
+      <h2 class="content-page__section-title content-page__collapse-heading">
+        <button type="button" class="content-page__collapse-trigger" aria-expanded="false" aria-controls="medicare-no-cubre-panel" id="medicare-no-cubre-trigger">
+          <span data-es="¿Qué no cubre Medicare?" data-en="What Doesn't Medicare Cover?" data-pt="O que o Medicare não cobre?">¿Qué no cubre Medicare?</span>
+          <span class="content-page__collapse-chevron" aria-hidden="true"></span>
+        </button>
+      </h2>
+      <div class="content-page__collapse-panel" id="medicare-no-cubre-panel" role="region" aria-labelledby="medicare-no-cubre-trigger" hidden>
       <p data-es="Medicare no cubre todos los servicios médicos." data-en="Medicare does not cover all medical services." data-pt="O Medicare não cobre todos os serviços médicos.">Medicare no cubre todos los servicios médicos.</p>
       <p data-es="Por ejemplo, algunos servicios pueden tener cobertura limitada o no estar cubiertos, como:" data-en="For example, some services may have limited coverage or may not be covered, such as:" data-pt="Por exemplo, alguns serviços podem ter cobertura limitada ou não estar cobertos, como:">Por ejemplo, algunos servicios pueden tener cobertura limitada o no estar cubiertos, como:</p>
       <ul>
@@ -97,17 +110,31 @@
         <li data-es="Algunos cuidados a largo plazo" data-en="Some long-term care" data-pt="Alguns cuidados de longo prazo">Algunos cuidados a largo plazo</li>
       </ul>
       <p data-es="La cobertura puede depender del tipo de servicio y del plan que tenga." data-en="Coverage may depend on the type of service and the plan you have." data-pt="A cobertura pode depender do tipo de serviço e do plano que você tiver.">La cobertura puede depender del tipo de servicio y del plan que tenga.</p>
+      </div>
     </section>
 
-    <section class="content-page__section">
-      <h2 class="content-page__section-title" data-es="¿Cuándo puede inscribirse?" data-en="When Can You Enroll?" data-pt="Quando você pode se inscrever?">¿Cuándo puede inscribirse?</h2>
+    <section class="content-page__section content-page__collapse">
+      <h2 class="content-page__section-title content-page__collapse-heading">
+        <button type="button" class="content-page__collapse-trigger" aria-expanded="false" aria-controls="medicare-inscribirse-panel" id="medicare-inscribirse-trigger">
+          <span data-es="¿Cuándo puede inscribirse?" data-en="When Can You Enroll?" data-pt="Quando você pode se inscrever?">¿Cuándo puede inscribirse?</span>
+          <span class="content-page__collapse-chevron" aria-hidden="true"></span>
+        </button>
+      </h2>
+      <div class="content-page__collapse-panel" id="medicare-inscribirse-panel" role="region" aria-labelledby="medicare-inscribirse-trigger" hidden>
       <p data-es="Muchas personas pueden inscribirse durante el período inicial de inscripción alrededor de los 65 años." data-en="Many people can enroll during the initial enrollment period around age 65." data-pt="Muitas pessoas podem se inscrever durante o período inicial de inscrição por volta dos 65 anos.">Muchas personas pueden inscribirse durante el período inicial de inscripción alrededor de los 65 años.</p>
       <p data-es="También existen otros períodos de inscripción dependiendo de su situación, por ejemplo, si continúa trabajando y tiene cobertura a través de un empleador." data-en="There are also other enrollment periods depending on your situation, for example, if you continue working and have coverage through an employer." data-pt="Também existem outros períodos de inscrição dependendo da sua situação, por exemplo, se você continua trabalhando e tem cobertura por meio de um empregador.">También existen otros períodos de inscripción dependiendo de su situación, por ejemplo, si continúa trabajando y tiene cobertura a través de un empleador.</p>
       <p data-es="Es importante informarse sobre los períodos de inscripción para evitar retrasos en la cobertura o posibles costos adicionales." data-en="It is important to learn about enrollment periods to avoid delays in coverage or possible additional costs." data-pt="É importante se informar sobre os períodos de inscrição para evitar atrasos na cobertura ou possíveis custos adicionais.">Es importante informarse sobre los períodos de inscripción para evitar retrasos en la cobertura o posibles costos adicionales.</p>
+      </div>
     </section>
 
-    <section class="content-page__section">
-      <h2 class="content-page__section-title" data-es="¿Cómo comparar opciones de Medicare?" data-en="How to Compare Medicare Options?" data-pt="Como comparar opções de Medicare?">¿Cómo comparar opciones de Medicare?</h2>
+    <section class="content-page__section content-page__collapse">
+      <h2 class="content-page__section-title content-page__collapse-heading">
+        <button type="button" class="content-page__collapse-trigger" aria-expanded="false" aria-controls="medicare-comparar-panel" id="medicare-comparar-trigger">
+          <span data-es="¿Cómo comparar opciones de Medicare?" data-en="How to Compare Medicare Options?" data-pt="Como comparar opções de Medicare?">¿Cómo comparar opciones de Medicare?</span>
+          <span class="content-page__collapse-chevron" aria-hidden="true"></span>
+        </button>
+      </h2>
+      <div class="content-page__collapse-panel" id="medicare-comparar-panel" role="region" aria-labelledby="medicare-comparar-trigger" hidden>
       <p data-es="Antes de elegir una opción, considere:" data-en="Before choosing an option, consider:" data-pt="Antes de escolher uma opção, considere:">Antes de elegir una opción, considere:</p>
 
       <h3 style="font-family: var(--font-primary); font-weight: 700; font-size: 1.05rem; color: var(--bosque); margin-top: 24px; margin-bottom: 8px;" data-es="Sus necesidades médicas" data-en="Your Medical Needs" data-pt="Suas necessidades médicas">Sus necesidades médicas</h3>
@@ -135,20 +162,34 @@
         <li data-es="Si sus medicamentos están cubiertos" data-en="Whether your medications are covered" data-pt="Se seus medicamentos estão cobertos">Si sus medicamentos están cubiertos</li>
         <li data-es="Si los hospitales o clínicas que utiliza forman parte de la red del plan" data-en="Whether the hospitals or clinics you use are part of the plan's network" data-pt="Se os hospitais ou clínicas que você usa fazem parte da rede do plano">Si los hospitales o clínicas que utiliza forman parte de la red del plan</li>
       </ul>
+      </div>
     </section>
 
-    <section class="content-page__section">
-      <h2 class="content-page__section-title" data-es="¿Dónde puede obtener ayuda?" data-en="Where Can You Get Help?" data-pt="Onde você pode obter ajuda?">¿Dónde puede obtener ayuda?</h2>
+    <section class="content-page__section content-page__collapse">
+      <h2 class="content-page__section-title content-page__collapse-heading">
+        <button type="button" class="content-page__collapse-trigger" aria-expanded="false" aria-controls="medicare-ayuda-panel" id="medicare-ayuda-trigger">
+          <span data-es="¿Dónde puede obtener ayuda?" data-en="Where Can You Get Help?" data-pt="Onde você pode obter ajuda?">¿Dónde puede obtener ayuda?</span>
+          <span class="content-page__collapse-chevron" aria-hidden="true"></span>
+        </button>
+      </h2>
+      <div class="content-page__collapse-panel" id="medicare-ayuda-panel" role="region" aria-labelledby="medicare-ayuda-trigger" hidden>
       <p data-es="Medicare puede ser complicado, especialmente al comparar planes. Puede obtener ayuda a través de:" data-en="Medicare can be complicated, especially when comparing plans. You can get help through:" data-pt="O Medicare pode ser complicado, especialmente ao comparar planos. Você pode obter ajuda por meio de:">Medicare puede ser complicado, especialmente al comparar planes. Puede obtener ayuda a través de:</p>
       <ul>
         <li data-es="El programa oficial de Medicare" data-en="The official Medicare program" data-pt="O programa oficial do Medicare">El programa oficial de Medicare</li>
         <li data-es="Programas estatales de asistencia para seguros médicos para personas mayores (SHIP)" data-en="State Health Insurance Assistance Programs (SHIP)" data-pt="Programas estaduais de assistência para planos de saúde para idosos (SHIP)">Programas estatales de asistencia para seguros médicos para personas mayores (SHIP)</li>
         <li data-es="Organizaciones comunitarias que ofrecen orientación sobre Medicare" data-en="Community organizations that offer Medicare guidance" data-pt="Organizações comunitárias que oferecem orientação sobre o Medicare">Organizaciones comunitarias que ofrecen orientación sobre Medicare</li>
       </ul>
+      </div>
     </section>
 
-    <section class="content-page__section">
-      <h2 class="content-page__section-title" data-es="Preguntas frecuentes" data-en="Frequently Asked Questions" data-pt="Perguntas frequentes">Preguntas frecuentes</h2>
+    <section class="content-page__section content-page__collapse">
+      <h2 class="content-page__section-title content-page__collapse-heading">
+        <button type="button" class="content-page__collapse-trigger" aria-expanded="false" aria-controls="medicare-faq-panel" id="medicare-faq-trigger">
+          <span data-es="Preguntas frecuentes" data-en="Frequently Asked Questions" data-pt="Perguntas frequentes">Preguntas frecuentes</span>
+          <span class="content-page__collapse-chevron" aria-hidden="true"></span>
+        </button>
+      </h2>
+      <div class="content-page__collapse-panel" id="medicare-faq-panel" role="region" aria-labelledby="medicare-faq-trigger" hidden>
 
       <div style="background: #fff; border: 1px solid rgba(46,139,122,0.12); border-radius: 12px; padding: 18px 24px; margin-bottom: 12px;">
         <p style="font-family: var(--font-primary); font-weight: 700; font-size: 1rem; color: var(--bosque); margin-bottom: 8px;" data-es="¿Medicare y Medicaid son lo mismo?" data-en="Are Medicare and Medicaid the same?" data-pt="Medicare e Medicaid são a mesma coisa?">¿Medicare y Medicaid son lo mismo?</p>
@@ -163,6 +204,7 @@
       <div style="background: #fff; border: 1px solid rgba(46,139,122,0.12); border-radius: 12px; padding: 18px 24px; margin-bottom: 12px;">
         <p style="font-family: var(--font-primary); font-weight: 700; font-size: 1rem; color: var(--bosque); margin-bottom: 8px;" data-es="¿Puedo tener Medicare y Medicaid al mismo tiempo?" data-en="Can I have Medicare and Medicaid at the same time?" data-pt="Posso ter Medicare e Medicaid ao mesmo tempo?">¿Puedo tener Medicare y Medicaid al mismo tiempo?</p>
         <p data-es="Sí. Algunas personas califican para ambos programas. Esto se conoce como elegibilidad doble y puede ayudar a cubrir diferentes costos de atención médica." data-en="Yes. Some people qualify for both programs. This is known as dual eligibility and can help cover different medical care costs." data-pt="Sim. Algumas pessoas se qualificam para ambos os programas. Isso é conhecido como elegibilidade dupla e pode ajudar a cobrir diferentes custos de atendimento médico.">Sí. Algunas personas califican para ambos programas. Esto se conoce como elegibilidad doble y puede ayudar a cubrir diferentes costos de atención médica.</p>
+      </div>
       </div>
     </section>
 

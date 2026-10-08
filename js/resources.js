@@ -134,6 +134,7 @@
         SHEET_ID +
         '/gviz/tq?sheet=' +
         encodeURIComponent(sheetName) +
+        '&headers=1' +
         '&tqx=responseHandler:' +
         cbName +
         '&_=' +
@@ -166,7 +167,7 @@
     item.resource_id = stringifyId(item.resource_id);
     item.phone = item.phone != null && String(item.phone).trim() !== '' ? String(item.phone).trim() : null;
     item.url = item.url != null && String(item.url).trim() !== '' ? String(item.url).trim() : null;
-    ['title', 'description', 'notes', 'language', 'geographic_scope'].forEach(function (key) {
+    ['title', 'description', 'notes', 'language', 'geographic_scope', 'resource_description', 'website_instructions'].forEach(function (key) {
       if (item[key] != null && String(item[key]).trim() !== '') {
         item[key] = String(item[key]).trim();
       } else {
@@ -691,7 +692,7 @@
     var note = '';
     if (localCount > 0 && /8008/.test(String(resource.phone))) {
       note =
-        '<p class="resource-finder__item-hint lang-hide-en">' +
+        '<p class="resource-finder__item-hint">' +
         t({
           es:
             'Si el número indicado no lo conecta, llame al 1-866-748-8008. Esa línea sí puede conectarlo con alguien en español.',
@@ -706,96 +707,47 @@
     return '<div class="resource-finder__phones">' + lines.join('') + note + '</div>';
   }
 
-  function compactHintForUrl(url) {
-    if (!url) return '';
-    var u = String(url).toLowerCase();
-    // California DDS main autism page
-    if (u.indexOf('dds.ca.gov') !== -1 && u.indexOf('/initiatives/autism') !== -1) {
-      return t({
-        es: 'Página principal',
-        en: 'Main page',
-        pt: 'Página principal'
-      });
-    }
-    // California DDS regional center directory
-    if (u.indexOf('dds.ca.gov') !== -1 && u.indexOf('/rc/listings') !== -1) {
-      return t({
-        es: 'Buscador de centros regionales',
-        en: 'Regional center finder',
-        pt: 'Localizador de centros regionais'
-      });
-    }
-    return '';
+  function sheetField(resource, name) {
+    if (!resource || !name) return '';
+    var lang = currentLang();
+    var keyed = resource[name + '_' + lang];
+    if (keyed != null && String(keyed).trim() !== '') return String(keyed).trim();
+    var raw = resource[name];
+    if (raw == null || String(raw).trim() === '') return '';
+    return String(raw).replace(/^\ufeff/, '').replace(/\s+/g, ' ').trim();
   }
 
-  /* Sheet notes are often English-only; map known language-tip patterns to site language */
-  function localizeAutismNote(rawNote) {
-    if (!rawNote) return '';
-    var note = String(rawNote).replace(/\s+/g, ' ').trim();
-    if (!note) return '';
-    var lower = note.toLowerCase();
+  function copyKey(raw) {
+    return String(raw || '')
+      .replace(/^\ufeff/, '')
+      .replace(/[\u201c\u201d\u00ab\u00bb]/g, '"')
+      .replace(/[\u2018\u2019]/g, "'")
+      .replace(/[\u2013\u2014\u2011]/g, '-')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .toLowerCase();
+  }
 
-    if (/world\s+icon|icono\s+del?\s+mundo|ícone\s+do\s+mundo/i.test(lower)) {
-      return t({
-        es: 'Puede cambiar el idioma en la esquina superior derecha (ícono del mundo).',
-        en: 'Change the language in the top right corner with the world icon.',
-        pt: 'Você pode mudar o idioma no canto superior direito (ícone do mundo).'
-      });
-    }
-    if (/upper\s+right|top\s+right|esquina\s+superior|parte\s+superior\s+derecha|canto\s+superior\s+direito/i.test(lower)) {
-      return t({
-        es: 'Puede cambiar el idioma en la esquina superior derecha.',
-        en: 'Change language in the upper right corner.',
-        pt: 'Você pode mudar o idioma no canto superior direito.'
-      });
-    }
-    if (/bottom\s+right|inferior\s+y\s+a\s+la\s+derecha|parte\s+inferior.*derecha|canto\s+inferior\s+direito/i.test(lower)) {
-      return t({
-        es: 'Puede cambiar el idioma en la parte inferior derecha.',
-        en: 'Change language at the bottom right.',
-        pt: 'Você pode mudar o idioma na parte inferior direita.'
-      });
-    }
-    if (/bottom\s+left|inferior\s+izquierd|canto\s+inferior\s+esquerdo/i.test(lower)) {
-      return t({
-        es: 'Puede cambiar el idioma en la parte inferior izquierda.',
-        en: 'Change language at the bottom left.',
-        pt: 'Você pode mudar o idioma na parte inferior esquerda.'
-      });
-    }
-    if (/at\s+the\s+top\b(?!.*right)(?!.*left)|parte\s+de\s+arriba|no\s+topo\s+da/i.test(lower)) {
-      return t({
-        es: 'Puede cambiar el idioma en la parte de arriba de la página.',
-        en: 'Change language at the top of the page.',
-        pt: 'Você pode mudar o idioma na parte de cima da página.'
-      });
-    }
-    if (/at\s+the\s+bottom|parte\s+abajo|parte\s+inferior|na\s+parte\s+de\s+baixo|no\s+rodapé/i.test(lower)) {
-      return t({
-        es: 'Puede cambiar el idioma en la parte de abajo de la página.',
-        en: 'Change language at the bottom of the page.',
-        pt: 'Você pode mudar o idioma na parte de baixo da página.'
-      });
-    }
-    if (/select\s+language|click.*languages/i.test(lower) && !/upper|top|bottom|left|right/i.test(lower)) {
-      return t({
-        es: 'Puede cambiar el idioma haciendo clic en la opción de idioma.',
-        en: 'Change language by clicking the language option.',
-        pt: 'Você pode mudar o idioma clicando na opção de idioma.'
-      });
-    }
-    if (/vale\s+la\s+pena\s+llamar|solo\s+estan\s+en\s+ingles|only\s+in\s+english|só\s+em\s+inglês/i.test(lower)) {
-      return t({
-        es: 'Recursos ubicados en Minnesota: vale la pena llamar aunque algunos sitios solo estén en inglés.',
-        en: 'Resources located in Minnesota — worth calling even if some sites are only in English.',
-        pt: 'Recursos localizados em Minnesota — vale a pena ligar mesmo que alguns sites estejam só em inglês.'
-      });
-    }
+  function localizeSheetCopy(raw) {
+    var s = String(raw || '')
+      .replace(/^\ufeff/, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+    if (!s) return '';
+    var table = window.__RESOURCE_COPY_I18N__ || {};
+    var entry = table[copyKey(s)];
+    if (!entry) return s;
+    var lang = currentLang();
+    var out = entry[lang] || entry.es || s;
+    return String(out || '').trim();
+  }
 
-    // Unknown note: only show if it already matches the active site language
-    var cleaned = cleanPublicText(note);
-    if (cleaned && looksCompatibleWithSiteLang(cleaned, currentLang())) return cleaned;
-    return '';
+  function localizeWebsiteInstructions(raw) {
+    return localizeSheetCopy(raw);
+  }
+
+  function localizeResourceDescription(raw) {
+    return localizeSheetCopy(raw);
   }
 
   function epilepsyDisplayTitle(resource, viewingStateId) {
@@ -868,157 +820,40 @@
     return t({ es: 'Recurso', en: 'Resource', pt: 'Recurso' });
   }
 
-  function renderCompactItem(resource, stateId, programId) {
-    var url = resource.url;
-    var typeId = String(resource.resource_type_id);
-    var prog = String(programId || resource.program_id || '').toUpperCase();
-    var isAutismFinder = prog.indexOf('AUTISM') !== -1;
-    var isAsthmaFinder = prog.indexOf('ASTHMA') !== -1;
-    var showTitleAsLink = isAutismFinder || isAsthmaFinder;
-
-    var label;
-    if (showTitleAsLink) {
-      var rawTitle = resource.title ? String(resource.title).trim() : '';
-      label =
-        rawTitle && !isLowQualityTitle(rawTitle)
-          ? rawTitle
-          : displayTitleForResource(resource, stateId);
-    } else {
-      label = displayTitleForResource(resource, stateId);
-    }
-
-    var hint = showTitleAsLink ? '' : compactHintForUrl(url);
-
-    var linkHtml = '';
-    if (url && !isPlaceholderUrl(url)) {
-      linkHtml =
-        '<a class="resource-finder__link resource-finder__link--primary" href="' +
-        escapeHtml(url) +
-        '" target="_blank" rel="noopener noreferrer">' +
-        escapeHtml(label) +
-        '</a>';
-    } else if (url && isPlaceholderUrl(url)) {
-      linkHtml =
-        '<p class="resource-finder__note">' +
-        t({
-          es: 'Enlace pendiente de verificación.',
-          en: 'Link pending verification.',
-          pt: 'Link pendente de verificação.'
-        }) +
-        '</p>';
-    } else {
-      linkHtml = '<p class="resource-finder__item-title">' + escapeHtml(label) + '</p>';
-    }
-
-    var hintHtml = hint
-      ? '<p class="resource-finder__item-hint">' + escapeHtml(hint) + '</p>'
-      : '';
-
-    var notesHtml = '';
-    if (showTitleAsLink) {
-      var localizedNote = pickLocalizedField(resource, 'notes');
-      var noteText;
-      if (localizedNote) {
-        noteText = localizedNote;
-      } else {
-        var rawNote = resource.notes ? String(resource.notes).trim() : '';
-        noteText = localizeAutismNote(rawNote);
-      }
-      if (noteText) {
-        notesHtml =
-          '<p class="resource-finder__item-note lang-hide-en">' + escapeHtml(noteText) + '</p>';
-      }
-    }
-
-    return (
-      '<article class="resource-finder__item resource-finder__item--compact" data-type="' +
-      escapeHtml(typeId) +
-      '">' +
-      linkHtml +
-      notesHtml +
-      hintHtml +
-      phoneHtml(resource) +
-      '</article>'
-    );
-  }
-
-  function renderDetailedItem(resource, data, stateId, programId) {
-    var stateName = stateNameFromData(data, stateId || resource.state_id);
-    var programName = programDisplayName(data, programId || resource.program_id);
-    var typeId = String(resource.resource_type_id);
-    var headingText = groupHeading(typeId, programName);
-    var titleText = userFacingTitle(resource, stateName, programName);
-    // Only show sheet-authored descriptions (skip generated filler)
-    var descText = '';
-    var localizedDesc = pickLocalizedField(resource, 'description');
-    var rawDesc = resource.description ? String(resource.description).trim() : '';
-    var candidate = cleanPublicText(localizedDesc || rawDesc);
-    if (candidate && looksCompatibleWithSiteLang(candidate, currentLang())) {
-      descText = candidate;
-    }
-
-    var url = resource.url;
-    var heading = escapeHtml(headingText);
-    var title = escapeHtml(titleText);
-    var desc = escapeHtml(descText);
-    var organization = escapeHtml(orgName(data, resource.org_id));
-
-    var metaParts = [];
-    if (organization) {
-      metaParts.push(
-        '<span class="resource-finder__meta-item">' +
-          t({ es: 'Organización:', en: 'Organization:', pt: 'Organização:' }) +
-          ' ' +
-          organization +
-          '</span>'
-      );
-    }
-
-    var linkHtml = '';
-    if (url && !isPlaceholderUrl(url)) {
-      linkHtml =
-        '<a class="resource-finder__link resource-finder__link--primary" href="' +
-        escapeHtml(url) +
-        '" target="_blank" rel="noopener noreferrer">' +
-        escapeHtml(resourceLinkLabel(resource, titleText)) +
-        '</a>';
-    } else if (url && isPlaceholderUrl(url)) {
-      linkHtml =
-        '<p class="resource-finder__note">' +
-        t({
-          es: 'Enlace pendiente de verificación.',
-          en: 'Link pending verification.',
-          pt: 'Link pendente de verificação.'
-        }) +
-        '</p>';
-    }
-
-    // Avoid repeating the hostname as both title and link label
-    var showTitle = titleText && !(url && !isPlaceholderUrl(url) && titleText === displayHostname(url));
-
-    return (
-      '<article class="resource-finder__item" data-type="' +
-      escapeHtml(typeId) +
-      '">' +
-      (heading ? '<p class="resource-finder__item-label">' + heading + '</p>' : '') +
-      (showTitle ? '<h3 class="resource-finder__item-title">' + title + '</h3>' : '') +
-      (desc ? '<p class="resource-finder__item-desc">' + desc + '</p>' : '') +
-      (metaParts.length
-        ? '<p class="resource-finder__meta">' +
-          metaParts.join('<span class="resource-finder__meta-sep" aria-hidden="true">·</span>') +
-          '</p>'
-        : '') +
-      phoneHtml(resource) +
-      linkHtml +
-      '</article>'
-    );
-  }
-
   function renderResourceItem(resource, data, stateId, programId, displayMode) {
-    if (displayMode === 'compact') {
-      return renderCompactItem(resource, stateId, programId);
+    var typeId = String(resource.resource_type_id || '');
+    var name = displayTitleForResource(resource, stateId);
+    var descText = localizeResourceDescription(sheetField(resource, 'resource_description'));
+    var instructionText = localizeWebsiteInstructions(sheetField(resource, 'website_instructions'));
+    var url = resource.url;
+    var hasUrl = url && !isPlaceholderUrl(url);
+    var compact = displayMode === 'compact';
+
+    var linkHtml = '';
+    if (hasUrl) {
+      linkHtml =
+        '<a class="resource-finder__link resource-finder__link--primary" href="' +
+        escapeHtml(url) +
+        '" target="_blank" rel="noopener noreferrer">' +
+        escapeHtml(displayHostname(url)) +
+        '</a>';
     }
-    return renderDetailedItem(resource, data, stateId, programId);
+
+    return (
+      '<article class="resource-finder__item' +
+      (compact ? ' resource-finder__item--compact' : '') +
+      '" data-type="' +
+      escapeHtml(typeId) +
+      '">' +
+      (name ? '<h3 class="resource-finder__item-title">' + escapeHtml(name) + '</h3>' : '') +
+      (descText ? '<p class="resource-finder__item-desc">' + escapeHtml(descText) + '</p>' : '') +
+      linkHtml +
+      phoneHtml(resource) +
+      (instructionText
+        ? '<p class="resource-finder__item-note">' + escapeHtml(instructionText) + '</p>'
+        : '') +
+      '</article>'
+    );
   }
 
   function resourceStateIds(resource) {

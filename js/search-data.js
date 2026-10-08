@@ -447,12 +447,12 @@ window.__SITE_SEARCH_INDEX__ = [
     categoryEs: 'Necesidades básicas',
     categoryEn: 'Basic needs',
     categoryPt: 'Necessidades básicas',
-    summaryEs: 'Ayuda con comida y vivienda.',
-    summaryEn: 'Help with food and housing.',
-    summaryPt: 'Ajuda com alimentação e moradia.',
+    summaryEs: 'Ayuda con comida, vivienda y centros comunitarios.',
+    summaryEn: 'Help with food, housing, and community centers.',
+    summaryPt: 'Ajuda com alimentação, moradia e centros comunitários.',
     keywords: [
       'necesidades básicas', 'comida', 'vivienda', 'basic needs', 'ayuda básica',
-      'food and housing'
+      'food and housing', 'centros comunitarios', 'community centers'
     ]
   },
   {
@@ -534,6 +534,23 @@ window.__SITE_SEARCH_INDEX__ = [
       'vivienda', 'renta', 'alquiler', 'desalojo', 'eviction', 'refugio',
       'shelter', 'luz', 'calefacción', 'utilities', 'housing help',
       'no puedo pagar la renta', 'electricidad'
+    ]
+  },
+  {
+    url: 'necesidades/centros-comunitarios.html',
+    titleEs: 'Centros comunitarios',
+    titleEn: 'Community Centers',
+    titlePt: 'Centros comunitários',
+    categoryEs: 'Necesidades básicas',
+    categoryEn: 'Basic needs',
+    categoryPt: 'Necessidades básicas',
+    summaryEs: 'Ayuda con trámites, salud, empleo, beneficios e inmigración.',
+    summaryEn: 'Help with paperwork, health, employment, benefits, and immigration.',
+    summaryPt: 'Ajuda com tramitações, saúde, emprego, benefícios e imigração.',
+    keywords: [
+      'centros comunitarios', 'community centers', 'centro comunitario',
+      'community center', 'trámites', 'inmigración', 'immigration',
+      'beneficios públicos', 'public benefits', 'empleo', 'jobs'
     ]
   },
   {

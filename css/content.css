@@ -478,8 +478,8 @@ a:hover .cta-arrow {
 
 .resource-finder__link--primary {
   display: inline-block;
-  font-size: 1.05rem;
-  margin-bottom: 4px;
+  font-size: 1rem;
+  margin: 2px 0 8px;
 }
 
 .resource-finder__item--compact .resource-finder__meta {
@@ -494,12 +494,12 @@ a:hover .cta-arrow {
 }
 
 .resource-finder__item-note {
-  margin: 0 0 2px;
+  margin: 6px 0 2px;
   max-width: 36rem;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: 400;
-  line-height: 1.35;
-  color: var(--muted);
+  line-height: 1.4;
+  color: var(--texto);
 }
 
 .resource-finder__item-label {
