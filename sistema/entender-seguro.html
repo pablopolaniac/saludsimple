@@ -58,8 +58,14 @@
       </section>
 
       <!-- ¿Cómo funciona el seguro médico? -->
-      <section class="content-page__section">
-        <h2 class="content-page__section-title" data-es="¿Cómo funciona el seguro médico?" data-en="How does health insurance work?" data-pt="Como funciona o seguro de saúde?">¿Cómo funciona el seguro médico?</h2>
+      <section class="content-page__section content-page__collapse">
+        <h2 class="content-page__section-title content-page__collapse-heading">
+          <button type="button" class="content-page__collapse-trigger" aria-expanded="false" aria-controls="como-funciona-seguro-panel" id="como-funciona-seguro-trigger">
+            <span data-es="¿Cómo funciona el seguro médico?" data-en="How does health insurance work?" data-pt="Como funciona o seguro de saúde?">¿Cómo funciona el seguro médico?</span>
+            <span class="content-page__collapse-chevron" aria-hidden="true"></span>
+          </button>
+        </h2>
+        <div class="content-page__collapse-panel" id="como-funciona-seguro-panel" role="region" aria-labelledby="como-funciona-seguro-trigger" hidden>
 
         <p data-es="En el sistema de salud participan principalmente tres partes:" data-en="There are mainly three parties involved in the healthcare system:" data-pt="Três partes principais participam do sistema de saúde:">En el sistema de salud participan principalmente tres partes:</p>
 
@@ -82,11 +88,18 @@
           <li data-es="Proporciona los servicios médicos que usted necesita." data-en="Provides the medical services you need." data-pt="Fornece os serviços médicos que você precisa.">Proporciona los servicios médicos que usted necesita.</li>
           <li data-es="Envía la información de la atención recibida al seguro para solicitar el pago." data-en="Sends the information about the care received to the insurance to request payment." data-pt="Envie as informações sobre os cuidados recebidos ao seguro para solicitar o pagamento.">Envía la información de la atención recibida al seguro para solicitar el pago.</li>
         </ul>
+        </div>
       </section>
 
       <!-- Términos comunes del seguro médico -->
-      <section class="content-page__section">
-        <h2 class="content-page__section-title" data-es="Términos comunes del seguro médico" data-en="Common health insurance terms" data-pt="Termos comuns de seguro de saúde">Términos comunes del seguro médico</h2>
+      <section class="content-page__section content-page__collapse">
+        <h2 class="content-page__section-title content-page__collapse-heading">
+          <button type="button" class="content-page__collapse-trigger" aria-expanded="false" aria-controls="terminos-seguro-panel" id="terminos-seguro-trigger">
+            <span data-es="Términos comunes del seguro médico" data-en="Common health insurance terms" data-pt="Termos comuns de seguro de saúde">Términos comunes del seguro médico</span>
+            <span class="content-page__collapse-chevron" aria-hidden="true"></span>
+          </button>
+        </h2>
+        <div class="content-page__collapse-panel" id="terminos-seguro-panel" role="region" aria-labelledby="terminos-seguro-trigger" hidden>
 
         <p data-es="Entender algunos términos básicos puede ayudarle a saber cuánto podría pagar por su atención médica." data-en="Understanding some basic terms can help you know how much you might pay for your medical care." data-pt="Compreender alguns termos básicos pode ajudá-lo a saber quanto poderá pagar pelos seus cuidados de saúde.">Entender algunos términos básicos puede ayudarle a saber cuánto podría pagar por su atención médica.</p>
 
@@ -174,6 +187,7 @@
             <p style="margin-bottom: 0;" data-es="Fuera de la red (out-of-network): Proveedores que no tienen contrato con su seguro. Pueden costar más o no estar cubiertos." data-en="Out-of-network: Providers that do not have a contract with your insurance. They may cost more or not be covered." data-pt="Fora da rede: Prestadores que não têm contrato com o seu seguro. Eles podem custar mais ou não ser cobertos.">Fuera de la red (out-of-network): Proveedores que no tienen contrato con su seguro. Pueden costar más o no estar cubiertos.</p>
           </div>
         </div>
+        </div>
       </section>
 
       <!-- Entender la cobertura de su seguro -->
@@ -216,8 +230,14 @@
       </section>
 
       <!-- QUICK LINKS -->
-      <section class="content-page__section">
-        <h2 class="content-page__section-title" data-es="¿Busca ayuda con una situación específica?" data-en="Looking for help with a specific situation?" data-pt="Procurando ajuda para uma situação específica?">¿Busca ayuda con una situación específica?</h2>
+      <section class="content-page__section content-page__collapse">
+        <h2 class="content-page__section-title content-page__collapse-heading">
+          <button type="button" class="content-page__collapse-trigger" aria-expanded="false" aria-controls="ayuda-situacion-panel" id="ayuda-situacion-trigger">
+            <span data-es="¿Busca ayuda con una situación específica?" data-en="Looking for help with a specific situation?" data-pt="Procurando ajuda para uma situação específica?">¿Busca ayuda con una situación específica?</span>
+            <span class="content-page__collapse-chevron" aria-hidden="true"></span>
+          </button>
+        </h2>
+        <div class="content-page__collapse-panel" id="ayuda-situacion-panel" role="region" aria-labelledby="ayuda-situacion-trigger" hidden>
 
         <div style="background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(46,139,122,0.07); padding: 28px; margin-bottom: 16px;">
           <h3 style="font-family: var(--font-primary); font-weight: 700; font-size: 1.1rem; color: var(--bosque); margin-bottom: 8px;">
@@ -231,6 +251,7 @@
             <a href="autorizaciones.html" class="link-cta" style="color: var(--salud); font-weight: 700; text-decoration: none;" data-es="Mi seguro negó un medicamento o tratamiento" data-en="My insurance denied a medication or treatment" data-pt="Meu seguro negou um medicamento ou tratamento">Mi seguro negó un medicamento o tratamiento</a>
           </h3>
           <p data-es="Conozca los pasos que puede seguir si su seguro rechaza un servicio, medicamento o tratamiento recomendado por un profesional de salud." data-en="Learn the steps you can take if your insurance denies a service, medication, or treatment recommended by a healthcare professional." data-pt="Aprenda as etapas que você pode seguir caso seu seguro negue um serviço, medicamento ou tratamento recomendado por um profissional de saúde.">Conozca los pasos que puede seguir si su seguro rechaza un servicio, medicamento o tratamiento recomendado por un profesional de salud.</p>
+        </div>
         </div>
       </section>
 
